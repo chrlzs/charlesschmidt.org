@@ -1,2 +1,13 @@
 # charlesschmidt.org
-My personal website
+
+**Build instructions**
+
+Build:
+
+    npm install
+    npm start
+
+Sass watch:  
+
+    npm run scss
+
