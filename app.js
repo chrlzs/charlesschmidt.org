@@ -13,8 +13,8 @@ router.get('/', function (req, res) {
     res.sendFile(path.join(homeDir +  'index.htm'));
 });
 // mail
-const apiKey = process.env.API_KEY;
-sgMail.setApiKey(apiKey);
+const apiKey = process.env.SENDGRID_API_KEY;sgMail.setApiKey("redacted");
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -31,19 +31,22 @@ app.post('/',function(req,res){
     var comments = req.body.comments;
 
     const msg = {
-        to: "cbronson@gmail.com", 
+        to: "me@charlesschmidt.org", 
         from: "no-reply@charlesschmidt.org", 
         subject: "Email from charlesschmidt.org",
         text: `Message from ${fullname}:\n${email}:\n${comments}`,
     }
 
     try {
+      if (comments) {        
         sgMail.send(msg);
-        console.log("sent!");
-      } catch (error) {
+        console.log("sent!!!! ");
+      }
+
+    } catch (error) {
         res.send("Message Could not be Sent");
         console.log("error sending");
-      }
+    }
 
     res.status(200);
     res.redirect('/#contact?success=true');
