@@ -27,8 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 console.log('!Running at Port 3000'); 
 
-console.log("hehhehehe");
-
 app.post('/',function(req,res){
     var name = req.body.full-name;
     var email = req.body.email;
