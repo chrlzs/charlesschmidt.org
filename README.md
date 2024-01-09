@@ -1,5 +1,9 @@
 # charlesschmidt.org
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Charlie_Schmidt-blue.svg)](https://www.linkedin.com/in/charlie-schmidt)
+[![GitHub](https://img.shields.io/badge/GitHub-chrlzs-blue.svg)](https://github.com/chrlzs)
+
 ## Overview
 
 [charlesschmidt.org](https://charlesschmidt.org/) is the personal website of Charlie Schmidt, a full-stack technology leader with over 25 years of experience. This project showcases Charlie's professional background, skills, and achievements.
@@ -49,3 +53,6 @@ For any questions or further information, you can reach out to Charlie Schmidt:
 - LinkedIn: [Charlie Schmidt on LinkedIn](https://www.linkedin.com/in/charlie-schmidt)
 - GitHub: [Charlie Schmidt on GitHub](https://github.com/chrlzs)
 - Email: [charles.schmidt@gmail.com](mailto:charles.schmidt@gmail.com)
+```
+
+In this example, I added three badges: one for the MIT License, one for LinkedIn, and one for GitHub. You can customize the URLs and labels based on your preferences. Also, feel free to add more badges if needed.
