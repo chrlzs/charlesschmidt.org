@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/tatertoten/charlie#readme",
   "dependencies": {
-    "@sendgrid/mail": "^8.1.0",
+    "@sendgrid/mail": "^8.1.1",
     "dotenv": "^16.4.2",
     "express": "^4.18.2",
     "globule": "^1.3.4",
