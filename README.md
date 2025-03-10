@@ -53,6 +53,4 @@ For any questions or further information, you can reach out to Charlie Schmidt:
 - LinkedIn: [Charlie Schmidt on LinkedIn](https://www.linkedin.com/in/charlie-schmidt)
 - GitHub: [Charlie Schmidt on GitHub](https://github.com/chrlzs)
 - Email: [charles.schmidt@gmail.com](mailto:charles.schmidt@gmail.com)
-```
 
-In this example, I added three badges: one for the MIT License, one for LinkedIn, and one for GitHub. You can customize the URLs and labels based on your preferences. Also, feel free to add more badges if needed.
