@@ -1,5 +1,5 @@
 # charlesschmidt.org
-
+## archived 03.15.25
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Charlie_Schmidt-blue.svg)](https://www.linkedin.com/in/charlie-schmidt)
 [![GitHub](https://img.shields.io/badge/GitHub-chrlzs-blue.svg)](https://github.com/chrlzs)
