@@ -88,7 +88,6 @@ body.parallax-container {
 }
 
 .nui.card-glass:hover, .card-glass:hover {
-  transform: translateY(-8px);
   box-shadow: 
     0 20px 60px var(--shadow-dark),
     0 0 30px var(--shadow-light);

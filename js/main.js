@@ -1,27 +1,6 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Enhanced card hover effects with 3D tilt
-    document.querySelectorAll('.card-glass').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = (y - centerY) / 30;
-            const rotateY = (centerX - x) / 30;
-
-            card.style.transform = `translateY(-8px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg)';
-        });
-    });
-
-
     // Badge hover effects
     document.querySelectorAll('.badge').forEach(badge => {
         badge.addEventListener('mouseenter', () => {
@@ -69,8 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Observe all cards for animation
     document.querySelectorAll('.card-glass').forEach(card => {
         card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        card.style.transition = 'opacity 0.6s ease';
         observer.observe(card);
     });
 
