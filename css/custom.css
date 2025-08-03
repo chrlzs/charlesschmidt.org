@@ -186,6 +186,21 @@ body.parallax-container {
 
 .border-l-4 {
   border-left-width: 4px;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(26, 26, 26, 0.3);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 1rem;
+  transition: none !important;
+  transform: none !important;
+}
+
+.border-l-4:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  background: rgba(26, 26, 26, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 .pl-4 {
@@ -221,13 +236,55 @@ body.parallax-container {
   text-shadow: 0 0 15px rgba(159, 220, 0, 0.5);
   transform-origin: 0 0;
   backface-visibility: visible;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, filter 0.3s ease;
   pointer-events: none;
   font-family: 'Courier New', monospace;
 }
 
 .text-char.back {
   color: rgba(159, 220, 0, 0.3);
+  filter: blur(0.5px);
+}
+
+/* Depth-based styling for different funnel layers */
+#funnel1 .text-char {
+  filter: blur(2px);
+  text-shadow: 0 0 20px rgba(159, 220, 0, 0.3);
+}
+
+#funnel2 .text-char {
+  filter: blur(1.5px);
+  text-shadow: 0 0 18px rgba(159, 220, 0, 0.4);
+}
+
+#funnel3 .text-char {
+  filter: blur(1px);
+  text-shadow: 0 0 16px rgba(159, 220, 0, 0.45);
+}
+
+#funnel4 .text-char {
+  filter: blur(0.8px);
+  text-shadow: 0 0 14px rgba(159, 220, 0, 0.5);
+}
+
+#funnel5 .text-char {
+  filter: blur(0.5px);
+  text-shadow: 0 0 12px rgba(159, 220, 0, 0.55);
+}
+
+#funnel6 .text-char {
+  filter: blur(0.3px);
+  text-shadow: 0 0 10px rgba(159, 220, 0, 0.6);
+}
+
+#funnel7 .text-char {
+  filter: blur(0.1px);
+  text-shadow: 0 0 8px rgba(159, 220, 0, 0.7);
+}
+
+#funnel8 .text-char {
+  filter: none;
+  text-shadow: 0 0 6px rgba(159, 220, 0, 0.8);
 }
 
 /* Funnel rotation animation */

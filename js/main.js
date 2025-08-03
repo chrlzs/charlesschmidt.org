@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+
     // Badge hover effects
     document.querySelectorAll('.badge').forEach(badge => {
         badge.addEventListener('mouseenter', () => {
@@ -73,14 +74,28 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(card);
     });
 
-    // Add parallax effect to background circles
+    // Add parallax effect to background circles and funnel layers
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
         const parallax = scrolled * 0.5;
 
+        // Parallax for background circles
         document.querySelectorAll('.circle').forEach((circle, index) => {
             const speed = 0.2 + (index * 0.1);
             circle.style.transform = `translateY(${parallax * speed}px)`;
+        });
+
+        // Parallax for funnel layers - different speeds based on depth
+        const funnelLayers = document.querySelectorAll('.funnel-layer');
+        funnelLayers.forEach((layer, index) => {
+            // Farther layers move slower (more depth illusion)
+            const depthSpeed = 0.1 + (index * 0.05);
+            const parallaxOffset = scrolled * depthSpeed;
+
+            // Add subtle horizontal movement for more dynamic effect
+            const horizontalOffset = Math.sin(scrolled * 0.001 + index) * 10;
+
+            layer.style.transform = `translateY(${parallaxOffset}px) translateX(${horizontalOffset}px)`;
         });
     });
 
@@ -274,6 +289,20 @@ function initializeFunnels() {
         opacity: 0.3,
         centerX: window.innerWidth * 0.5,
         centerY: window.innerHeight * 0.2
+    });
+
+    // Ultra-foreground - tiny, very sharp and visible
+    new FunnelAnimation('funnel8', {
+        text: "UI ",
+        maxRadius: 60,
+        minRadius: 2,
+        totalHeight: 100,
+        spiralTurns: 1.5,
+        rotationSpeed: 12,
+        fontSize: 6,
+        opacity: 0.35,
+        centerX: window.innerWidth * 0.2,
+        centerY: window.innerHeight * 0.9
     });
 }
 
