@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     // Enhanced card hover effects with 3D tilt
-    document.querySelectorAll('.nui.card-glass').forEach(card => {
+    document.querySelectorAll('.card-glass').forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Badge hover effects
-    document.querySelectorAll('.nui.badge').forEach(badge => {
+    document.querySelectorAll('.badge').forEach(badge => {
         badge.addEventListener('mouseenter', () => {
             badge.style.background = 'var(--accent-green-light)';
             badge.style.borderColor = 'var(--accent-green)';
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, observerOptions);
 
     // Observe all cards for animation
-    document.querySelectorAll('.nui.card-glass').forEach(card => {
+    document.querySelectorAll('.card-glass').forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
         card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';

@@ -1,5 +1,17 @@
-/* Modern Design Variables */
+/* NUI Framework Dark Theme Override */
 :root {
+  /* Override NUI default colors for dark theme */
+  --primary-color: #9fdc00;
+  --secondary-color: #7cb800;
+  --dark-color: #e0e0e0;
+  --light-color: #0a0a0a;
+  --lighter-color: #1a1a1a;
+  --white: #ffffff;
+  --card-bg: rgba(26, 26, 26, 0.8);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-footer-text: #a0a0a0;
+  
+  /* Custom theme variables */
   --accent-green: #9fdc00;
   --accent-green-dark: #7cb800;
   --accent-green-light: rgba(159, 220, 0, 0.1);
@@ -64,10 +76,10 @@ body.parallax-container {
 }
 
 /* Enhanced Glass Effects for NUI Cards */
-.nui.card-glass {
-  background: var(--glass-bg);
+.nui.card-glass, .card-glass {
+  background: var(--glass-bg) !important;
   backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--glass-border) !important;
   box-shadow: 
     0 8px 32px var(--shadow-dark),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -75,23 +87,23 @@ body.parallax-container {
   border-radius: 16px;
 }
 
-.nui.card-glass:hover {
+.nui.card-glass:hover, .card-glass:hover {
   transform: translateY(-8px);
   box-shadow: 
     0 20px 60px var(--shadow-dark),
     0 0 30px var(--shadow-light);
-  border-color: rgba(159, 220, 0, 0.3);
+  border-color: rgba(159, 220, 0, 0.3) !important;
 }
 
 /* Enhanced Header */
-.nui.bg-primary-glass {
-  background: rgba(10, 10, 10, 0.9);
+.nui.bg-primary-glass, .bg-primary-glass {
+  background: rgba(10, 10, 10, 0.9) !important;
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--glass-border);
   position: relative;
 }
 
-.nui.bg-primary-glass::before {
+.nui.bg-primary-glass::before, .bg-primary-glass::before {
   content: '';
   position: absolute;
   top: 0;
@@ -102,7 +114,7 @@ body.parallax-container {
   pointer-events: none;
 }
 
-.nui.bg-primary-glass > * {
+.nui.bg-primary-glass > *, .bg-primary-glass > * {
   position: relative;
   z-index: 1;
 }
@@ -113,16 +125,17 @@ body.parallax-container {
 }
 
 /* Enhanced Badges */
-.nui.badge {
-  background: rgba(42, 42, 42, 0.8);
-  border: 1px solid var(--glass-border);
+.nui.badge, .badge {
+  background: rgba(42, 42, 42, 0.8) !important;
+  border: 1px solid var(--glass-border) !important;
   backdrop-filter: blur(10px);
   transition: all 0.2s ease;
+  color: var(--dark-color) !important;
 }
 
-.nui.badge:hover {
-  background: var(--accent-green-light);
-  border-color: var(--accent-green);
+.nui.badge:hover, .badge:hover {
+  background: var(--accent-green-light) !important;
+  border-color: var(--accent-green) !important;
   box-shadow: 0 4px 12px rgba(159, 220, 0, 0.2);
 }
 
@@ -190,10 +203,32 @@ body.parallax-container {
 }
 
 /* Footer styling */
-.nui.bg-muted-glass {
-  background: rgba(42, 42, 42, 0.6);
+.nui.bg-muted-glass, .bg-muted-glass {
+  background: rgba(42, 42, 42, 0.6) !important;
   backdrop-filter: blur(10px);
   border-top: 1px solid var(--glass-border);
+}
+
+/* Override NUI button styles for dark theme */
+.button {
+  background-color: var(--primary-color) !important;
+  color: var(--black) !important;
+}
+
+.button:hover {
+  background-color: var(--secondary-color) !important;
+  color: var(--black) !important;
+}
+
+.button-outline {
+  background-color: transparent !important;
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+.button-outline:hover {
+  background-color: var(--primary-color) !important;
+  color: var(--black) !important;
 }
 
 /* Print styles for resume */

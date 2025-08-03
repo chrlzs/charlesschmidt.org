@@ -16,7 +16,7 @@ A modern, responsive portfolio website featuring glass morphism design and smoot
 - **HTML5**: Semantic markup structure
 - **CSS3**: Custom properties, flexbox, grid, and advanced animations
 - **JavaScript**: Modern ES6+ features, intersection observer, and smooth scrolling
-- **NUI Framework**: Custom lightweight CSS component library
+- **NUI Framework**: Official NUI-Native-UI component library from https://github.com/chrlzs/NUI-Native-UI
 
 ## Design Improvements Made
 
@@ -46,8 +46,10 @@ A modern, responsive portfolio website featuring glass morphism design and smoot
 
 ### Technical Improvements
 
-- Fixed missing CSS framework dependency
-- Completed incomplete JavaScript functionality
+- Integrated official NUI-Native-UI framework with proper component structure
+- Implemented NUI's CSS custom properties system for theming
+- Used authentic NUI class names and component architecture
+- Enhanced with dark theme overrides while maintaining NUI compatibility
 - Added proper event listeners and DOM ready handling
 - Implemented responsive design patterns
 - Added print-friendly styles
@@ -87,11 +89,13 @@ charlesschmidt.org/
 
 ## Performance
 
-- Lightweight CSS framework (~8KB)
-- Minimal JavaScript (~3KB)
-- Optimized animations using CSS transforms
+- Official NUI framework with component-based architecture
+- Dark theme overrides using CSS custom properties
+- Minimal JavaScript (~3KB) with modern ES6+ features
+- Optimized animations using CSS transforms and backdrop filters
 - Efficient DOM queries and event handling
+- Glass morphism effects with hardware acceleration
 
 ---
 
-Built with ❤️ using modern web technologies and the NUI component library.
+Built with ❤️ using modern web technologies and the official [NUI-Native-UI](https://github.com/chrlzs/NUI-Native-UI) component library.
