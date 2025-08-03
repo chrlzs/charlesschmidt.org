@@ -1,0 +1,214 @@
+/* Modern Design Variables */
+:root {
+  --accent-green: #9fdc00;
+  --accent-green-dark: #7cb800;
+  --accent-green-light: rgba(159, 220, 0, 0.1);
+  --glass-bg: rgba(26, 26, 26, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --shadow-light: rgba(159, 220, 0, 0.2);
+  --shadow-dark: rgba(0, 0, 0, 0.5);
+}
+
+/* Enhanced Background */
+body.parallax-container {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1f0f 100%);
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Background Floating Elements */
+.bg-circles {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-green-light) 0%, transparent 70%);
+  animation: float 8s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+.circle:nth-child(1) {
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.circle:nth-child(2) {
+  width: 200px;
+  height: 200px;
+  bottom: 20%;
+  left: 5%;
+  animation-delay: 2s;
+}
+
+.circle:nth-child(3) {
+  width: 150px;
+  height: 150px;
+  top: 50%;
+  left: 50%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+/* Enhanced Glass Effects for NUI Cards */
+.nui.card-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    0 8px 32px var(--shadow-dark),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 16px;
+}
+
+.nui.card-glass:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 20px 60px var(--shadow-dark),
+    0 0 30px var(--shadow-light);
+  border-color: rgba(159, 220, 0, 0.3);
+}
+
+/* Enhanced Header */
+.nui.bg-primary-glass {
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  position: relative;
+}
+
+.nui.bg-primary-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 0%, var(--accent-green-light) 100%);
+  pointer-events: none;
+}
+
+.nui.bg-primary-glass > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Accent Color Updates */
+.border-accent {
+  border-color: var(--accent-green);
+}
+
+/* Enhanced Badges */
+.nui.badge {
+  background: rgba(42, 42, 42, 0.8);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.nui.badge:hover {
+  background: var(--accent-green-light);
+  border-color: var(--accent-green);
+  box-shadow: 0 4px 12px rgba(159, 220, 0, 0.2);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-green);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green-dark);
+}
+
+/* Custom styles for resume layout */
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .grid-cols-1.md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.border-l-4 {
+  border-left-width: 4px;
+}
+
+.pl-4 {
+  padding-left: 1rem;
+}
+
+.list-inside {
+  list-style-position: inside;
+}
+
+/* Content wrapper for better layout */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Footer styling */
+.nui.bg-muted-glass {
+  background: rgba(42, 42, 42, 0.6);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Print styles for resume */
+@media print {
+  .nui.bg-primary {
+    background: #333 !important;
+    color: white !important;
+  }
+  
+  .nui.card {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+  
+  body {
+    font-size: 12px;
+  }
+}

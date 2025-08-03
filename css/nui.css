@@ -1,0 +1,254 @@
+/* NUI - Native UI Framework */
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #e0e0e0;
+  background: #0a0a0a;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: #9fdc00;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #7cb800;
+}
+
+/* Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.max-w-4xl {
+  max-width: 56rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Flexbox */
+.flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+/* Spacing */
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-12 { margin-top: 3rem; }
+
+.space-y-1 > * + * { margin-top: 0.25rem; }
+.space-y-4 > * + * { margin-top: 1rem; }
+.space-y-6 > * + * { margin-top: 1.5rem; }
+
+/* Text */
+.text-center { text-align: center; }
+.text-sm { font-size: 0.875rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-4xl { font-size: 2.25rem; }
+
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.font-medium { font-weight: 500; }
+.font-sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+.text-primary { color: #e0e0e0; }
+.text-primary-contrast { color: #ffffff; }
+.text-muted { color: #a0a0a0; }
+.text-link { color: #9fdc00; }
+
+/* Backgrounds */
+.bg-surface { background-color: #0a0a0a; }
+.bg-primary { background-color: #1a1a1a; }
+.bg-muted { background-color: #2a2a2a; }
+
+/* Cards */
+.card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #333;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #333;
+}
+
+.card-body {
+  /* No additional styles needed, content flows naturally */
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  background: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  transition: all 0.2s ease;
+}
+
+.badge:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+.badge-outline {
+  background: transparent;
+  border: 1px solid #9fdc00;
+  color: #9fdc00;
+}
+
+.badge-outline:hover {
+  background: rgba(159, 220, 0, 0.1);
+}
+
+/* Buttons */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: #9fdc00;
+  color: #000;
+}
+
+.button:hover {
+  background: #7cb800;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(159, 220, 0, 0.3);
+}
+
+.button-outline {
+  background: transparent;
+  border: 1px solid #9fdc00;
+  color: #9fdc00;
+}
+
+.button-outline:hover {
+  background: #9fdc00;
+  color: #000;
+}
+
+/* Lists */
+.list-disc {
+  list-style-type: disc;
+}
+
+.list-inside {
+  list-style-position: inside;
+}
+
+/* Borders */
+.border {
+  border: 1px solid #333;
+}
+
+.border-l-4 {
+  border-left: 4px solid;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  
+  .text-4xl { font-size: 2rem; }
+  .text-2xl { font-size: 1.25rem; }
+  
+  .card {
+    padding: 1rem;
+  }
+  
+  .py-8 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flex {
+    flex-direction: column;
+  }
+  
+  .gap-4 > * {
+    margin-bottom: 0.5rem;
+  }
+}
