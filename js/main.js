@@ -178,8 +178,22 @@ class FunnelAnimation {
 
 // Create multiple funnel animations with different properties
 function initializeFunnels() {
-    // Large background funnel
+    // Far background - very large, very faint
     new FunnelAnimation('funnel1', {
+        text: "FULL-STACK ",
+        maxRadius: 400,
+        minRadius: 25,
+        totalHeight: 500,
+        spiralTurns: 5,
+        rotationSpeed: 45,
+        fontSize: 20,
+        opacity: 0.08,
+        centerX: window.innerWidth * 0.15,
+        centerY: window.innerHeight * 0.7
+    });
+
+    // Large background funnel
+    new FunnelAnimation('funnel2', {
         text: "CODE ",
         maxRadius: 280,
         minRadius: 18,
@@ -187,27 +201,55 @@ function initializeFunnels() {
         spiralTurns: 4,
         rotationSpeed: 30,
         fontSize: 16,
+        opacity: 0.12,
+        centerX: window.innerWidth * 0.8,
+        centerY: window.innerHeight * 0.3
+    });
+
+    // Medium-large funnel
+    new FunnelAnimation('funnel3', {
+        text: "TECH ",
+        maxRadius: 200,
+        minRadius: 12,
+        totalHeight: 280,
+        spiralTurns: 3.5,
+        rotationSpeed: 25,
+        fontSize: 14,
         opacity: 0.15,
-        centerX: window.innerWidth * 0.25,
-        centerY: window.innerHeight * 0.6
+        centerX: window.innerWidth * 0.3,
+        centerY: window.innerHeight * 0.5
     });
 
     // Medium funnel
-    new FunnelAnimation('funnel2', {
-        text: "TECH ",
+    new FunnelAnimation('funnel4', {
+        text: "DEV ",
         maxRadius: 160,
         minRadius: 10,
         totalHeight: 220,
         spiralTurns: 3,
         rotationSpeed: 22,
         fontSize: 12,
-        opacity: 0.2,
-        centerX: window.innerWidth * 0.75,
+        opacity: 0.18,
+        centerX: window.innerWidth * 0.7,
+        centerY: window.innerHeight * 0.8
+    });
+
+    // Medium-small funnel
+    new FunnelAnimation('funnel5', {
+        text: "WEB ",
+        maxRadius: 120,
+        minRadius: 8,
+        totalHeight: 180,
+        spiralTurns: 2.8,
+        rotationSpeed: 20,
+        fontSize: 11,
+        opacity: 0.22,
+        centerX: window.innerWidth * 0.1,
         centerY: window.innerHeight * 0.4
     });
 
     // Small funnel
-    new FunnelAnimation('funnel3', {
+    new FunnelAnimation('funnel6', {
         text: "NUI ",
         maxRadius: 100,
         minRadius: 6,
@@ -216,8 +258,22 @@ function initializeFunnels() {
         rotationSpeed: 18,
         fontSize: 10,
         opacity: 0.25,
+        centerX: window.innerWidth * 0.9,
+        centerY: window.innerHeight * 0.6
+    });
+
+    // Foreground - smallest, most visible
+    new FunnelAnimation('funnel7', {
+        text: "JS ",
+        maxRadius: 80,
+        minRadius: 4,
+        totalHeight: 120,
+        spiralTurns: 2,
+        rotationSpeed: 15,
+        fontSize: 8,
+        opacity: 0.3,
         centerX: window.innerWidth * 0.5,
-        centerY: window.innerHeight * 0.8
+        centerY: window.innerHeight * 0.2
     });
 }
 
