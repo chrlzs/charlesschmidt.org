@@ -46,7 +46,8 @@ body.parallax-container {
 @media (prefers-reduced-motion: reduce) {
   .funnel-layer,
   .circle,
-  .text-char {
+  .text-char,
+  .marine-particle {
     animation: none !important;
     transform: none !important;
   }
@@ -57,6 +58,10 @@ body.parallax-container {
   
   .badge {
     transition: none !important;
+  }
+  
+  .marine-snow-container {
+    display: none !important;
   }
 }
 
@@ -391,6 +396,80 @@ body.parallax-container {
   text-shadow: 0 0 6px rgba(159, 220, 0, 0.8);
 }
 
+/* Marine Snow Particle Styles */
+/*
+   Styles for marine snow particles that create an underwater suspended particulate effect.
+   Uses programming symbols with depth-based opacity and blur for realism.
+*/
+.marine-snow-container {
+  contain: layout style paint;
+  will-change: scroll-position;
+}
+
+.marine-particle {
+  position: fixed;
+  color: var(--accent-green);
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-origin: center center;
+  transition: opacity 0.3s ease;
+}
+
+/* Enhanced marine particle glow effect */
+.marine-particle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(159, 220, 0, 0.1) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  border-radius: 50%;
+}
+
+/* Different particle types for variety */
+.marine-particle[data-symbol="{"],
+.marine-particle[data-symbol="}"] {
+  color: rgba(159, 220, 0, 0.9);
+}
+
+.marine-particle[data-symbol="["],
+.marine-particle[data-symbol="]"] {
+  color: rgba(159, 220, 0, 0.8);
+}
+
+.marine-particle[data-symbol="("],
+.marine-particle[data-symbol=")"] {
+  color: rgba(159, 220, 0, 0.7);
+}
+
+.marine-particle[data-symbol="<"],
+.marine-particle[data-symbol=">"] {
+  color: rgba(159, 220, 0, 0.6);
+}
+
+/* Subtle animation for particles when they're created */
+@keyframes particleSpawn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.marine-particle {
+  animation: particleSpawn 0.5s ease-out;
+}
+
 /* Funnel rotation animation */
 /*
    Keyframes for rotating funnel containers in 3D space.
@@ -437,7 +516,9 @@ body.parallax-container {
   /* Hide decorative elements */
   .bg-circles,
   .funnel-layer,
-  .text-char {
+  .text-char,
+  .marine-snow-container,
+  .marine-particle {
     display: none !important;
   }
   

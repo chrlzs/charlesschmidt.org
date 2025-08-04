@@ -5,11 +5,13 @@ class App {
      * Constructs the App controller.
      * funnelManager: Manages funnel animations.
      * uiInteractions: Manages UI interactions.
+     * marineSnow: Manages marine snow particle effect.
      * isInitialized: Tracks initialization state.
      */
     constructor() {
         this.funnelManager = null;
         this.uiInteractions = null;
+        this.marineSnow = null;
         this.isInitialized = false;
     }
 
@@ -27,6 +29,13 @@ class App {
         this.funnelManager = new FunnelManager();
         this.funnelManager.init();
 
+        // Initialize marine snow particle effect
+        this.marineSnow = new MarineSnowSystem({
+            particleCount: 40,
+            baseSpeed: 0.8,
+            enableParallax: true
+        });
+
         this.isInitialized = true;
     }
 
@@ -40,6 +49,9 @@ class App {
         if (this.uiInteractions) {
             this.uiInteractions.destroy();
         }
+        if (this.marineSnow) {
+            this.marineSnow.destroy();
+        }
         this.isInitialized = false;
     }
 }
@@ -51,7 +63,7 @@ class App {
  */
 document.addEventListener('DOMContentLoaded', function () {
     // Check if required classes are available
-    if (typeof FunnelManager === 'undefined' || typeof UIInteractions === 'undefined') {
+    if (typeof FunnelManager === 'undefined' || typeof UIInteractions === 'undefined' || typeof MarineSnowSystem === 'undefined') {
         console.warn('Required modules not loaded. Some features may not work.');
         return;
     }
