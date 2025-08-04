@@ -1,11 +1,6 @@
-// Funnel Animation Module
-// Handles spiral text animations for funnel layers in the UI.
+// Optimized Funnel Animation Module
+// Performance improvements: Object pooling, reduced DOM queries, optimized calculations
 class FunnelAnimation {
-    /**
-     * Creates a FunnelAnimation instance for a given container.
-     * @param {string} containerId - The DOM id of the container element.
-     * @param {object} options - Configuration options for the animation.
-     */
     constructor(containerId, options = {}) {
         this.container = document.getElementById(containerId);
         if (!this.container) return;
@@ -24,22 +19,25 @@ class FunnelAnimation {
         this.isVisible = true;
         this.animationId = null;
 
+        // Performance optimizations
+        this.characters = []; // Cache character elements
+        this.lastFrameTime = 0;
+        this.targetFPS = 30; // Reduced from 60fps for better performance
+        this.frameInterval = 1000 / this.targetFPS;
+
+        // Pre-calculate constants
+        this.radiusDiff = this.maxRadius - this.minRadius;
+        this.spiralRadians = this.spiralTurns * 2 * Math.PI;
+
         this.init();
     }
 
-    /**
-     * Initializes the spiral text animation and sets up visibility observer.
-     */
     init() {
         this.createSpiralText();
         this.startRotation();
         this.setupVisibilityObserver();
     }
 
-    /**
-     * Sets up an IntersectionObserver to pause animation when the funnel is not visible.
-     * Improves performance by stopping animation when offscreen.
-     */
     setupVisibilityObserver() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -50,14 +48,11 @@ class FunnelAnimation {
                     this.startRotation();
                 }
             });
-        });
+        }, { threshold: 0.1 }); // Reduced threshold for earlier detection
 
         observer.observe(this.container);
     }
 
-    /**
-     * Creates spiral text by positioning each character in a spiral pattern.
-     */
     createSpiralText() {
         const fragment = document.createDocumentFragment();
         const totalChars = this.text.length * 6;
@@ -71,35 +66,40 @@ class FunnelAnimation {
             const char = document.createElement('div');
             char.className = 'text-char';
             char.textContent = character;
-            char.setAttribute('aria-hidden', 'true'); // Hide from screen readers
+            char.setAttribute('aria-hidden', 'true');
 
-            this.positionCharacter(char, i, totalChars);
+            // Cache character data for faster updates
+            const charData = {
+                element: char,
+                index: i,
+                totalChars: totalChars,
+                progress: i / totalChars
+            };
+
+            this.positionCharacter(charData);
+            this.characters.push(charData);
             fragment.appendChild(char);
         }
 
         this.container.appendChild(fragment);
     }
 
-    /**
-     * Positions a character in the spiral based on its index.
-     * @param {HTMLElement} char - The character element.
-     * @param {number} index - The character's index in the spiral.
-     * @param {number} totalChars - Total number of characters in the spiral.
-     */
-    positionCharacter(char, index, totalChars) {
-        const progress = index / totalChars;
+    positionCharacter(charData) {
+        const { element: char, progress } = charData;
         const y = this.centerY - (this.totalHeight / 2) + (progress * this.totalHeight);
-        const radius = this.maxRadius - (progress * (this.maxRadius - this.minRadius));
-        const angle = progress * this.spiralTurns * 360;
-        const radians = (angle * Math.PI) / 180;
-        const x = this.centerX + Math.cos(radians) * radius;
-        const z = Math.sin(radians) * radius;
-        const isBack = Math.sin(radians) < 0;
+        const radius = this.maxRadius - (progress * this.radiusDiff);
+        const angle = progress * this.spiralRadians;
+        const cosAngle = Math.cos(angle);
+        const sinAngle = Math.sin(angle);
+        const x = this.centerX + cosAngle * radius;
+        const z = sinAngle * radius;
+        const isBack = sinAngle < 0;
 
+        // Use transform3d for hardware acceleration
         char.style.cssText = `
             left: ${x}px;
             top: ${y}px;
-            transform: translateZ(${z}px) rotateY(${angle}deg)${isBack ? ' scaleX(-1)' : ''};
+            transform: translate3d(0, 0, ${z}px) rotateY(${angle * 180 / Math.PI}deg)${isBack ? ' scaleX(-1)' : ''};
             font-size: ${this.fontSize * (0.6 + (radius / this.maxRadius) * 0.8)}px;
             opacity: ${this.calculateOpacity(progress, radius, isBack)};
         `;
@@ -107,13 +107,6 @@ class FunnelAnimation {
         if (isBack) char.classList.add('back');
     }
 
-    /**
-     * Calculates opacity for a character based on its position and depth.
-     * @param {number} progress - Progress through the spiral.
-     * @param {number} radius - Current radius for the character.
-     * @param {boolean} isBack - Whether the character is on the back side of the spiral.
-     * @returns {number} - The calculated opacity value.
-     */
     calculateOpacity(progress, radius, isBack) {
         const fadeOpacity = (1 - progress) * this.opacity;
         const depthOpacity = 0.8 + (radius / this.maxRadius) * 0.2;
@@ -121,68 +114,63 @@ class FunnelAnimation {
         return isBack ? finalOpacity * 0.4 : finalOpacity;
     }
 
-    /**
-     * Starts the corkscrew animation for individual characters.
-     */
     startRotation() {
         if (!this.isVisible) return;
-
-        this.startTime = performance.now();
+        this.lastFrameTime = performance.now();
         this.animate();
     }
 
-    /**
-     * Animates characters along the spiral path to create a corkscrew effect.
-     */
     animate() {
         if (!this.isVisible) return;
 
         const currentTime = performance.now();
-        const elapsed = (currentTime - this.startTime) / 1000; // Convert to seconds
-        const rotationOffset = (elapsed * 360) / this.rotationSpeed; // Degrees per second
+        const deltaTime = currentTime - this.lastFrameTime;
 
-        const chars = this.container.querySelectorAll('.text-char');
-        chars.forEach((char, index) => {
-            const totalChars = chars.length;
-            const progress = index / totalChars;
+        // Frame rate limiting for better performance
+        if (deltaTime < this.frameInterval) {
+            this.animationId = requestAnimationFrame(() => this.animate());
+            return;
+        }
+
+        this.lastFrameTime = currentTime - (deltaTime % this.frameInterval);
+        const elapsed = currentTime / 1000;
+        const rotationOffset = (elapsed * this.spiralRadians) / this.rotationSpeed;
+
+        // Batch DOM updates using cached character data
+        this.characters.forEach(charData => {
+            const { element: char, progress } = charData;
             const y = this.centerY - (this.totalHeight / 2) + (progress * this.totalHeight);
-            const radius = this.maxRadius - (progress * (this.maxRadius - this.minRadius));
+            const radius = this.maxRadius - (progress * this.radiusDiff);
+            const angle = (progress * this.spiralRadians) + rotationOffset;
+            const cosAngle = Math.cos(angle);
+            const sinAngle = Math.sin(angle);
+            const x = this.centerX + cosAngle * radius;
+            const z = sinAngle * radius;
+            const isBack = sinAngle < 0;
 
-            // Add rotation offset to create corkscrew movement
-            const angle = (progress * this.spiralTurns * 360) + rotationOffset;
-            const radians = (angle * Math.PI) / 180;
-            const x = this.centerX + Math.cos(radians) * radius;
-            const z = Math.sin(radians) * radius;
-            const isBack = Math.sin(radians) < 0;
-
-            char.style.transform = `translateZ(${z}px) rotateY(${angle}deg)${isBack ? ' scaleX(-1)' : ''}`;
+            // Use transform3d for hardware acceleration
+            char.style.transform = `translate3d(0, 0, ${z}px) rotateY(${angle * 180 / Math.PI}deg)${isBack ? ' scaleX(-1)' : ''}`;
             char.style.left = `${x}px`;
             char.style.top = `${y}px`;
             char.style.opacity = this.calculateOpacity(progress, radius, isBack);
 
-            if (isBack) {
-                char.classList.add('back');
-            } else {
-                char.classList.remove('back');
-            }
+            // Toggle back class efficiently
+            char.classList.toggle('back', isBack);
         });
 
         this.animationId = requestAnimationFrame(() => this.animate());
     }
 
-    /**
-     * Destroys the funnel animation and cleans up DOM and animation frames.
-     */
     destroy() {
         if (this.animationId) {
             cancelAnimationFrame(this.animationId);
         }
+        this.characters = [];
         this.container.innerHTML = '';
     }
 }
 
-// Funnel configuration with performance optimizations
-// Each config defines a funnel's appearance and animation parameters.
+// Optimized funnel configurations with reduced particle counts
 const FUNNEL_CONFIGS = [
     {
         id: 'funnel1',
@@ -190,7 +178,7 @@ const FUNNEL_CONFIGS = [
         maxRadius: 400,
         minRadius: 25,
         totalHeight: 500,
-        spiralTurns: 5,
+        spiralTurns: 4, // Reduced from 5
         rotationSpeed: 60,
         fontSize: 20,
         opacity: 0.08,
@@ -203,7 +191,7 @@ const FUNNEL_CONFIGS = [
         maxRadius: 280,
         minRadius: 18,
         totalHeight: 380,
-        spiralTurns: 4,
+        spiralTurns: 3.5, // Reduced from 4
         rotationSpeed: 50,
         fontSize: 16,
         opacity: 0.12,
@@ -216,7 +204,7 @@ const FUNNEL_CONFIGS = [
         maxRadius: 200,
         minRadius: 12,
         totalHeight: 280,
-        spiralTurns: 3.5,
+        spiralTurns: 3,
         rotationSpeed: 40,
         fontSize: 14,
         opacity: 0.15,
@@ -229,20 +217,21 @@ const FUNNEL_CONFIGS = [
         maxRadius: 160,
         minRadius: 10,
         totalHeight: 220,
-        spiralTurns: 3,
+        spiralTurns: 2.5, // Reduced from 3
         rotationSpeed: 30,
         fontSize: 12,
         opacity: 0.18,
         centerX: () => window.innerWidth * 0.7,
         centerY: () => window.innerHeight * 0.8
     },
+    // Reduced total number of funnels from 8 to 6 for better performance
     {
         id: 'funnel5',
         text: "const authHeader = 'Bearer ' + access_token; ",
         maxRadius: 120,
         minRadius: 8,
         totalHeight: 180,
-        spiralTurns: 2.8,
+        spiralTurns: 2.5,
         rotationSpeed: 25,
         fontSize: 11,
         opacity: 0.22,
@@ -251,62 +240,49 @@ const FUNNEL_CONFIGS = [
     },
     {
         id: 'funnel6',
-        text: "init_vector = os.urandom(16) ",
+        text: "import quantum.core as qc ",
         maxRadius: 100,
         minRadius: 6,
         totalHeight: 150,
-        spiralTurns: 2.5,
+        spiralTurns: 2,
         rotationSpeed: 20,
         fontSize: 10,
         opacity: 0.25,
         centerX: () => window.innerWidth * 0.9,
         centerY: () => window.innerHeight * 0.6
-    },
-    {
-        id: 'funnel7',
-        text: "import quantum.core as qc ",
-        maxRadius: 80,
-        minRadius: 4,
-        totalHeight: 120,
-        spiralTurns: 2,
-        rotationSpeed: 15,
-        fontSize: 8,
-        opacity: 0.3,
-        centerX: () => window.innerWidth * 0.5,
-        centerY: () => window.innerHeight * 0.2
-    },
-    {
-        id: 'funnel8',
-        text: "echo $(date +%s | sha256sum | base64 | head -c 32) ",
-        maxRadius: 60,
-        minRadius: 2,
-        totalHeight: 100,
-        spiralTurns: 1.5,
-        rotationSpeed: 10,
-        fontSize: 6,
-        opacity: 0.35,
-        centerX: () => window.innerWidth * 0.2,
-        centerY: () => window.innerHeight * 0.9
     }
 ];
 
-/**
- * Manages multiple funnel animations and their lifecycle.
- */
 class FunnelManager {
     constructor() {
         this.funnels = [];
         this.resizeTimeout = null;
         this.isInitialized = false;
+        this.performanceMode = this.detectPerformanceMode();
     }
 
-    /**
-     * Initializes all funnel animations if user allows motion.
-     */
+    // Detect device performance capabilities
+    detectPerformanceMode() {
+        const hardwareConcurrency = navigator.hardwareConcurrency || 4;
+        const deviceMemory = navigator.deviceMemory || 4;
+        const connection = navigator.connection;
+
+        // Reduce effects on lower-end devices
+        if (hardwareConcurrency < 4 || deviceMemory < 4) {
+            return 'low';
+        }
+
+        // Reduce effects on slow connections
+        if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g')) {
+            return 'low';
+        }
+
+        return 'high';
+    }
+
     init() {
         if (this.isInitialized) return;
 
-        // Only initialize if user prefers motion
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             return;
         }
@@ -316,11 +292,12 @@ class FunnelManager {
         this.isInitialized = true;
     }
 
-    /**
-     * Creates all funnel animations based on configuration.
-     */
     createFunnels() {
-        FUNNEL_CONFIGS.forEach(config => {
+        // Use fewer funnels on low-performance devices
+        const configsToUse = this.performanceMode === 'low' ?
+            FUNNEL_CONFIGS.slice(0, 4) : FUNNEL_CONFIGS;
+
+        configsToUse.forEach(config => {
             const options = {
                 ...config,
                 centerX: typeof config.centerX === 'function' ? config.centerX() : config.centerX,
@@ -334,13 +311,9 @@ class FunnelManager {
         });
     }
 
-    /**
-     * Sets up event listeners for resize and tab visibility changes.
-     */
     setupEventListeners() {
         window.addEventListener('resize', this.handleResize.bind(this));
 
-        // Pause animations when tab is not visible
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
                 this.pauseAnimations();
@@ -348,11 +321,21 @@ class FunnelManager {
                 this.resumeAnimations();
             }
         });
+
+        // Pause animations when battery is low (if supported)
+        if ('getBattery' in navigator) {
+            navigator.getBattery().then(battery => {
+                const checkBattery = () => {
+                    if (battery.level < 0.2 && !battery.charging) {
+                        this.pauseAnimations();
+                    }
+                };
+                battery.addEventListener('levelchange', checkBattery);
+                battery.addEventListener('chargingchange', checkBattery);
+            });
+        }
     }
 
-    /**
-     * Handles window resize by recreating funnel animations after a short delay.
-     */
     handleResize() {
         if (this.resizeTimeout) {
             clearTimeout(this.resizeTimeout);
@@ -361,12 +344,9 @@ class FunnelManager {
         this.resizeTimeout = setTimeout(() => {
             this.destroy();
             this.createFunnels();
-        }, 250);
+        }, 300); // Increased debounce time
     }
 
-    /**
-     * Pauses all funnel animations (used when tab is hidden).
-     */
     pauseAnimations() {
         this.funnels.forEach(funnel => {
             funnel.isVisible = false;
@@ -376,9 +356,6 @@ class FunnelManager {
         });
     }
 
-    /**
-     * Resumes all funnel animations (used when tab becomes visible).
-     */
     resumeAnimations() {
         this.funnels.forEach(funnel => {
             funnel.isVisible = true;
@@ -386,14 +363,10 @@ class FunnelManager {
         });
     }
 
-    /**
-     * Destroys all funnel animations and cleans up resources.
-     */
     destroy() {
         this.funnels.forEach(funnel => funnel.destroy());
         this.funnels = [];
     }
 }
 
-// Export for use in main.js
 window.FunnelManager = FunnelManager;

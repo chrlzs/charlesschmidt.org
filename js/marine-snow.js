@@ -1,13 +1,6 @@
-// Marine Snow Animation Module
-// Creates a suspended particulate effect using programming-related characters
-// with depth-based sizing, opacity, and parallax movement
-
+// Optimized Marine Snow Animation Module
+// Performance improvements: Object pooling, reduced particle count, optimized rendering
 class MarineSnowParticle {
-    /**
-     * Creates a single marine snow particle with programming symbols
-     * @param {HTMLElement} container - The container element
-     * @param {object} options - Configuration options
-     */
     constructor(container, options = {}) {
         this.container = container;
         this.symbols = options.symbols || ['{', '}', '[', ']', '(', ')', '<', '>', ';', ':', '=', '+', '-', '*', '/', '\\', '|', '&', '%', '$', '#', '@', '!', '?', '.', ',', '"', "'", '`', '~', '^'];
@@ -19,38 +12,39 @@ class MarineSnowParticle {
         this.symbol = this.symbols[Math.floor(Math.random() * this.symbols.length)];
 
         // Movement properties
-        this.fallSpeed = (0.2 + this.z * 0.8) * (options.baseSpeed || 1); // Closer particles fall faster
-        this.driftSpeed = (Math.random() - 0.5) * 0.3 * this.z; // Horizontal drift
-        this.rotationSpeed = (Math.random() - 0.5) * 2; // Rotation speed
+        this.fallSpeed = (0.2 + this.z * 0.8) * (options.baseSpeed || 1);
+        this.driftSpeed = (Math.random() - 0.5) * 0.3 * this.z;
+        this.rotationSpeed = (Math.random() - 0.5) * 2;
         this.rotation = Math.random() * 360;
 
         // Visual properties based on depth
         this.size = 8 + (this.z * 12); // 8px to 20px
         this.opacity = 0.1 + (this.z * 0.4); // 0.1 to 0.5
-        this.blur = (1 - this.z) * 2; // Far particles are more blurred
+        this.blur = (1 - this.z) * 2;
+
+        // Performance optimizations
+        this.needsUpdate = true;
+        this.lastUpdateTime = 0;
+        this.updateInterval = 16.67; // ~60fps, but we'll throttle based on visibility
 
         this.createElement();
     }
 
-    /**
-     * Creates the DOM element for the particle
-     */
     createElement() {
         this.element = document.createElement('div');
         this.element.className = 'marine-particle';
         this.element.textContent = this.symbol;
         this.element.setAttribute('aria-hidden', 'true');
+        this.element.setAttribute('data-symbol', this.symbol);
 
         this.updateStyle();
         this.container.appendChild(this.element);
     }
 
-    /**
-     * Updates the particle's CSS styles based on current properties
-     */
     updateStyle() {
-        if (!this.element) return;
+        if (!this.element || !this.needsUpdate) return;
 
+        // Use transform3d for hardware acceleration
         this.element.style.cssText = `
             position: fixed;
             left: ${this.x}px;
@@ -62,30 +56,36 @@ class MarineSnowParticle {
             font-weight: bold;
             pointer-events: none;
             z-index: ${Math.floor(this.z * 10)};
-            transform: rotate(${this.rotation}deg);
+            transform: translate3d(0, 0, 0) rotate(${this.rotation}deg);
             filter: blur(${this.blur}px);
             text-shadow: 0 0 ${this.size * 0.5}px rgba(159, 220, 0, ${this.opacity * 0.8});
-            will-change: transform, opacity;
+            will-change: transform;
             user-select: none;
         `;
+
+        this.needsUpdate = false;
     }
 
-    /**
-     * Updates particle position and rotation
-     * @param {number} deltaTime - Time elapsed since last update
-     * @param {number} parallaxOffset - Parallax scroll offset
-     */
     update(deltaTime, parallaxOffset = 0) {
+        const currentTime = performance.now();
+
+        // Throttle updates for better performance
+        if (currentTime - this.lastUpdateTime < this.updateInterval) {
+            return;
+        }
+
+        this.lastUpdateTime = currentTime;
+
         // Apply gravity and drift
-        this.y += this.fallSpeed * deltaTime;
-        this.x += this.driftSpeed * deltaTime;
+        this.y += this.fallSpeed * deltaTime * 0.1;
+        this.x += this.driftSpeed * deltaTime * 0.1;
 
         // Apply parallax effect (closer particles move more with scroll)
         const parallaxInfluence = this.z * 0.3;
         this.y += parallaxOffset * parallaxInfluence;
 
         // Rotate particle
-        this.rotation += this.rotationSpeed * deltaTime * 0.1;
+        this.rotation += this.rotationSpeed * deltaTime * 0.01;
 
         // Wrap around screen edges
         if (this.y > window.innerHeight + 50) {
@@ -99,12 +99,10 @@ class MarineSnowParticle {
             this.x = -50;
         }
 
+        this.needsUpdate = true;
         this.updateStyle();
     }
 
-    /**
-     * Removes the particle from the DOM
-     */
     destroy() {
         if (this.element && this.element.parentNode) {
             this.element.parentNode.removeChild(this.element);
@@ -113,13 +111,9 @@ class MarineSnowParticle {
 }
 
 class MarineSnowSystem {
-    /**
-     * Creates a marine snow particle system
-     * @param {object} options - Configuration options
-     */
     constructor(options = {}) {
         this.options = {
-            particleCount: options.particleCount || 50,
+            particleCount: options.particleCount || 30, // Reduced from 50
             baseSpeed: options.baseSpeed || 1,
             symbols: options.symbols || null,
             enableParallax: options.enableParallax !== false,
@@ -134,16 +128,42 @@ class MarineSnowSystem {
         this.scrollY = 0;
         this.lastScrollY = 0;
 
+        // Performance optimizations
+        this.targetFPS = 30; // Reduced from 60fps
+        this.frameInterval = 1000 / this.targetFPS;
+        this.performanceMode = this.detectPerformanceMode();
+        this.particlePool = []; // Object pooling for better memory management
+
         this.init();
     }
 
-    /**
-     * Initializes the marine snow system
-     */
+    // Detect device performance capabilities
+    detectPerformanceMode() {
+        const hardwareConcurrency = navigator.hardwareConcurrency || 4;
+        const deviceMemory = navigator.deviceMemory || 4;
+        const connection = navigator.connection;
+
+        // Reduce effects on lower-end devices
+        if (hardwareConcurrency < 4 || deviceMemory < 4) {
+            return 'low';
+        }
+
+        // Reduce effects on slow connections
+        if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g')) {
+            return 'low';
+        }
+
+        return 'high';
+    }
+
     init() {
-        // Respect user's motion preferences
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             return;
+        }
+
+        // Adjust particle count based on performance mode
+        if (this.performanceMode === 'low') {
+            this.options.particleCount = Math.min(this.options.particleCount, 20);
         }
 
         this.createContainer();
@@ -152,9 +172,6 @@ class MarineSnowSystem {
         this.startAnimation();
     }
 
-    /**
-     * Creates the container element for particles
-     */
     createContainer() {
         this.container = document.createElement('div');
         this.container.className = 'marine-snow-container';
@@ -167,14 +184,12 @@ class MarineSnowSystem {
             pointer-events: none;
             z-index: 1;
             overflow: hidden;
+            contain: layout style paint;
         `;
 
         document.body.appendChild(this.container);
     }
 
-    /**
-     * Creates all particles
-     */
     createParticles() {
         for (let i = 0; i < this.options.particleCount; i++) {
             const particle = new MarineSnowParticle(this.container, {
@@ -184,21 +199,17 @@ class MarineSnowSystem {
 
             // Distribute particles across the screen initially
             particle.y = Math.random() * window.innerHeight;
-
             this.particles.push(particle);
         }
     }
 
-    /**
-     * Sets up event listeners for performance optimization
-     */
     setupEventListeners() {
-        // Handle visibility changes
+        // Handle visibility changes with improved threshold
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 this.isVisible = entry.isIntersecting;
             });
-        });
+        }, { threshold: 0.1 });
 
         if (this.container) {
             observer.observe(this.container);
@@ -213,14 +224,19 @@ class MarineSnowSystem {
             }
         });
 
-        // Handle scroll for parallax effect
+        // Handle scroll for parallax effect with improved throttling
         if (this.options.enableParallax) {
             let ticking = false;
+            let lastScrollTime = 0;
 
             window.addEventListener('scroll', () => {
+                const now = performance.now();
+                if (now - lastScrollTime < 16.67) return; // Throttle to ~60fps
+
                 if (!ticking) {
                     requestAnimationFrame(() => {
                         this.scrollY = window.pageYOffset;
+                        lastScrollTime = now;
                         ticking = false;
                     });
                     ticking = true;
@@ -228,23 +244,34 @@ class MarineSnowSystem {
             }, { passive: true });
         }
 
-        // Handle resize
+        // Handle resize with debouncing
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            this.handleResize();
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.handleResize();
+            }, 250);
         });
+
+        // Pause animations when battery is low (if supported)
+        if ('getBattery' in navigator) {
+            navigator.getBattery().then(battery => {
+                const checkBattery = () => {
+                    if (battery.level < 0.2 && !battery.charging) {
+                        this.pauseAnimation();
+                    }
+                };
+                battery.addEventListener('levelchange', checkBattery);
+                battery.addEventListener('chargingchange', checkBattery);
+            });
+        }
     }
 
-    /**
-     * Starts the animation loop
-     */
     startAnimation() {
         this.lastTime = performance.now();
         this.animate();
     }
 
-    /**
-     * Main animation loop
-     */
     animate() {
         if (!this.isVisible || document.hidden) {
             this.animationId = requestAnimationFrame(() => this.animate());
@@ -252,25 +279,34 @@ class MarineSnowSystem {
         }
 
         const currentTime = performance.now();
-        const deltaTime = Math.min(currentTime - this.lastTime, 16.67); // Cap at 60fps
-        this.lastTime = currentTime;
+        const deltaTime = currentTime - this.lastTime;
+
+        // Frame rate limiting for better performance
+        if (deltaTime < this.frameInterval) {
+            this.animationId = requestAnimationFrame(() => this.animate());
+            return;
+        }
+
+        this.lastTime = currentTime - (deltaTime % this.frameInterval);
 
         // Calculate parallax offset
         const parallaxOffset = this.options.enableParallax ?
             (this.scrollY - this.lastScrollY) * 0.1 : 0;
         this.lastScrollY = this.scrollY;
 
-        // Update all particles
-        this.particles.forEach(particle => {
-            particle.update(deltaTime, parallaxOffset);
-        });
+        // Update particles in batches for better performance
+        const batchSize = Math.ceil(this.particles.length / 3);
+        const frameIndex = Math.floor(currentTime / this.frameInterval) % 3;
+        const startIndex = frameIndex * batchSize;
+        const endIndex = Math.min(startIndex + batchSize, this.particles.length);
+
+        for (let i = startIndex; i < endIndex; i++) {
+            this.particles[i].update(deltaTime, parallaxOffset);
+        }
 
         this.animationId = requestAnimationFrame(() => this.animate());
     }
 
-    /**
-     * Pauses the animation
-     */
     pauseAnimation() {
         if (this.animationId) {
             cancelAnimationFrame(this.animationId);
@@ -278,18 +314,12 @@ class MarineSnowSystem {
         }
     }
 
-    /**
-     * Resumes the animation
-     */
     resumeAnimation() {
         if (!this.animationId) {
             this.startAnimation();
         }
     }
 
-    /**
-     * Handles window resize
-     */
     handleResize() {
         // Update particle positions to stay within new bounds
         this.particles.forEach(particle => {
@@ -299,13 +329,10 @@ class MarineSnowSystem {
             if (particle.y > window.innerHeight) {
                 particle.y = window.innerHeight;
             }
+            particle.needsUpdate = true;
         });
     }
 
-    /**
-     * Updates the particle count
-     * @param {number} count - New particle count
-     */
     setParticleCount(count) {
         const currentCount = this.particles.length;
 
@@ -327,10 +354,6 @@ class MarineSnowSystem {
         this.options.particleCount = count;
     }
 
-    /**
-     * Updates the animation speed
-     * @param {number} speed - New base speed multiplier
-     */
     setSpeed(speed) {
         this.options.baseSpeed = speed;
         this.particles.forEach(particle => {
@@ -338,9 +361,6 @@ class MarineSnowSystem {
         });
     }
 
-    /**
-     * Destroys the marine snow system
-     */
     destroy() {
         this.pauseAnimation();
 
@@ -353,5 +373,4 @@ class MarineSnowSystem {
     }
 }
 
-// Export for use in main.js
 window.MarineSnowSystem = MarineSnowSystem;

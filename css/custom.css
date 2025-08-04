@@ -1,4 +1,4 @@
-/* NUI Framework Dark Theme Override */
+/* Optimized NUI Framework Dark Theme Override */
 /*
    Root variables for dark theme colors and custom accents.
    These variables are used throughout the UI for consistent theming.
@@ -81,48 +81,49 @@ body.parallax-container {
 
 /*
    Individual floating circle for parallax background.
-   Uses radial gradient and float animation for depth effect.
+   Uses radial gradient and optimized float animation for depth effect.
 */
 .circle {
   position: absolute;
   border-radius: 50%;
   background: radial-gradient(circle, var(--accent-green-light) 0%, transparent 70%);
-  animation: float 8s ease-in-out infinite;
-  opacity: 0.6;
+  animation: float 12s ease-in-out infinite; /* Increased duration for smoother animation */
+  opacity: 0.4; /* Reduced opacity for better performance */
   will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .circle:nth-child(1) {
-  width: 300px;
-  height: 300px;
+  width: 250px; /* Reduced size */
+  height: 250px;
   top: 10%;
   right: 10%;
   animation-delay: 0s;
 }
 
 .circle:nth-child(2) {
-  width: 200px;
-  height: 200px;
+  width: 180px; /* Reduced size */
+  height: 180px;
   bottom: 20%;
   left: 5%;
-  animation-delay: 2s;
-}
-
-.circle:nth-child(3) {
-  width: 150px;
-  height: 150px;
-  top: 50%;
-  left: 50%;
   animation-delay: 4s;
 }
 
+.circle:nth-child(3) {
+  width: 120px; /* Reduced size */
+  height: 120px;
+  top: 50%;
+  left: 50%;
+  animation-delay: 8s;
+}
+
 /*
-   Keyframes for floating circle animation.
-   Creates a gentle up-and-down floating effect.
+   Optimized keyframes for floating circle animation.
+   Creates a gentle up-and-down floating effect with reduced movement.
 */
 @keyframes float {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-20px) scale(1.05); }
+  0%, 100% { transform: translateY(0px) translateZ(0) scale(1); }
+  50% { transform: translateY(-15px) translateZ(0) scale(1.03); } /* Reduced movement */
 }
 
 /* Enhanced Glass Effects for NUI Cards with performance optimization */
@@ -132,27 +133,28 @@ body.parallax-container {
 */
 .nui.card-glass, .card-glass {
   background: var(--glass-bg) !important;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(15px); /* Reduced blur for better performance */
   border: 1px solid var(--glass-border) !important;
   box-shadow: 
-    0 8px 32px var(--shadow-dark),
+    0 6px 24px var(--shadow-dark), /* Reduced shadow complexity */
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Faster transition */
   border-radius: 16px;
   padding: 2rem;
   will-change: transform, box-shadow;
   contain: layout style;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 /*
-   Hover effect for glass cards, increases shadow and lifts card slightly.
+   Optimized hover effect for glass cards.
 */
 .nui.card-glass:hover, .card-glass:hover {
   box-shadow: 
-    0 20px 60px var(--shadow-dark),
-    0 0 30px var(--shadow-light);
+    0 12px 40px var(--shadow-dark), /* Reduced shadow complexity */
+    0 0 20px var(--shadow-light); /* Reduced glow */
   border-color: rgba(159, 220, 0, 0.3) !important;
-  transform: translateY(-2px);
+  transform: translateY(-1px) translateZ(0); /* Reduced lift */
 }
 
 /* Enhanced Header */
@@ -161,7 +163,7 @@ body.parallax-container {
 */
 .nui.bg-primary-glass, .bg-primary-glass {
   background: rgba(10, 10, 10, 0.9) !important;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(15px); /* Reduced blur */
   border-bottom: 1px solid var(--glass-border);
   position: relative;
 }
@@ -204,20 +206,21 @@ body.parallax-container {
 .nui.badge, .badge {
   background: rgba(42, 42, 42, 0.8) !important;
   border: 1px solid var(--glass-border) !important;
-  backdrop-filter: blur(10px);
-  transition: all 0.2s ease;
+  backdrop-filter: blur(8px); /* Reduced blur */
+  transition: all 0.15s ease; /* Faster transition */
   color: var(--dark-color) !important;
   will-change: transform, background-color, border-color, box-shadow;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 /*
-   Hover effect for glassy badges, changes color and adds shadow.
+   Optimized hover effect for glassy badges.
 */
 .nui.badge:hover, .badge:hover {
   background: var(--accent-green-light) !important;
   border-color: var(--accent-green) !important;
-  box-shadow: 0 4px 12px rgba(159, 220, 0, 0.2);
-  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(159, 220, 0, 0.15); /* Reduced shadow */
+  transform: translateY(-0.5px) translateZ(0); /* Reduced lift */
 }
 
 /* Scrollbar Styling */
@@ -322,81 +325,76 @@ body.parallax-container {
   height: 100%;
   transform-style: preserve-3d;
   z-index: -1;
-  perspective: 1200px;
+  perspective: 1000px; /* Reduced perspective for better performance */
   will-change: transform;
   contain: layout style paint;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 /*
-   Spiral text character style for funnel animations.
+   Optimized spiral text character style for funnel animations.
    Uses accent color, shadow, and blur for glowing effect.
 */
 .text-char {
   position: absolute;
   color: var(--accent-green);
   font-weight: bold;
-  text-shadow: 0 0 15px rgba(159, 220, 0, 0.5);
+  text-shadow: 0 0 10px rgba(159, 220, 0, 0.4); /* Reduced glow */
   transform-origin: 0 0;
-  backface-visibility: visible;
-  transition: opacity 0.3s ease, filter 0.3s ease;
+  backface-visibility: hidden; /* Improved performance */
+  transition: opacity 0.2s ease, filter 0.2s ease; /* Faster transitions */
   pointer-events: none;
   font-family: 'Courier New', monospace;
   will-change: transform, opacity;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 /*
    Style for spiral text characters on the back side of the spiral.
 */
 .text-char.back {
-  color: rgba(159, 220, 0, 0.3);
-  filter: blur(0.5px);
+  color: rgba(159, 220, 0, 0.25); /* Reduced opacity */
+  filter: blur(0.3px); /* Reduced blur */
 }
 
-/* Depth-based styling for different funnel layers */
+/* Optimized depth-based styling for different funnel layers */
 /*
    Each funnel layer has a unique blur and shadow for depth effect.
+   Reduced complexity for better performance.
 */
 #funnel1 .text-char {
-  filter: blur(2px);
-  text-shadow: 0 0 20px rgba(159, 220, 0, 0.3);
+  filter: blur(1.5px); /* Reduced blur */
+  text-shadow: 0 0 15px rgba(159, 220, 0, 0.25);
 }
 
 #funnel2 .text-char {
-  filter: blur(1.5px);
-  text-shadow: 0 0 18px rgba(159, 220, 0, 0.4);
+  filter: blur(1.2px);
+  text-shadow: 0 0 13px rgba(159, 220, 0, 0.3);
 }
 
 #funnel3 .text-char {
-  filter: blur(1px);
-  text-shadow: 0 0 16px rgba(159, 220, 0, 0.45);
+  filter: blur(0.8px);
+  text-shadow: 0 0 12px rgba(159, 220, 0, 0.35);
 }
 
 #funnel4 .text-char {
-  filter: blur(0.8px);
-  text-shadow: 0 0 14px rgba(159, 220, 0, 0.5);
+  filter: blur(0.6px);
+  text-shadow: 0 0 10px rgba(159, 220, 0, 0.4);
 }
 
 #funnel5 .text-char {
-  filter: blur(0.5px);
-  text-shadow: 0 0 12px rgba(159, 220, 0, 0.55);
+  filter: blur(0.4px);
+  text-shadow: 0 0 8px rgba(159, 220, 0, 0.45);
 }
 
 #funnel6 .text-char {
-  filter: blur(0.3px);
-  text-shadow: 0 0 10px rgba(159, 220, 0, 0.6);
+  filter: blur(0.2px);
+  text-shadow: 0 0 6px rgba(159, 220, 0, 0.5);
 }
 
-#funnel7 .text-char {
-  filter: blur(0.1px);
-  text-shadow: 0 0 8px rgba(159, 220, 0, 0.7);
-}
+/* Removed funnel7 and funnel8 styles since we reduced the number of funnels */
 
-#funnel8 .text-char {
-  filter: none;
-  text-shadow: 0 0 6px rgba(159, 220, 0, 0.8);
-}
-
-/* Marine Snow Particle Styles */
+/* Optimized Marine Snow Particle Styles */
 /*
    Styles for marine snow particles that create an underwater suspended particulate effect.
    Uses programming symbols with depth-based opacity and blur for realism.
@@ -404,6 +402,7 @@ body.parallax-container {
 .marine-snow-container {
   contain: layout style paint;
   will-change: scroll-position;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .marine-particle {
@@ -416,67 +415,50 @@ body.parallax-container {
   will-change: transform, opacity;
   backface-visibility: hidden;
   transform-origin: center center;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease; /* Faster transition */
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
-/* Enhanced marine particle glow effect */
+/* Simplified marine particle glow effect for better performance */
 .marine-particle::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(159, 220, 0, 0.1) 0%, transparent 70%);
+  width: 150%; /* Reduced size */
+  height: 150%;
+  background: radial-gradient(circle, rgba(159, 220, 0, 0.08) 0%, transparent 60%); /* Reduced intensity */
   transform: translate(-50%, -50%);
   z-index: -1;
   border-radius: 50%;
 }
 
-/* Different particle types for variety */
+/* Simplified particle types for better performance */
 .marine-particle[data-symbol="{"],
-.marine-particle[data-symbol="}"] {
-  color: rgba(159, 220, 0, 0.9);
-}
-
+.marine-particle[data-symbol="}"],
 .marine-particle[data-symbol="["],
-.marine-particle[data-symbol="]"] {
-  color: rgba(159, 220, 0, 0.8);
-}
-
+.marine-particle[data-symbol="]"],
 .marine-particle[data-symbol="("],
-.marine-particle[data-symbol=")"] {
-  color: rgba(159, 220, 0, 0.7);
-}
-
+.marine-particle[data-symbol=")"],
 .marine-particle[data-symbol="<"],
 .marine-particle[data-symbol=">"] {
-  color: rgba(159, 220, 0, 0.6);
+  color: rgba(159, 220, 0, 0.7); /* Unified color for better performance */
 }
 
-/* Subtle animation for particles when they're created */
+/* Optimized animation for particles when they're created */
 @keyframes particleSpawn {
   0% {
     opacity: 0;
-    transform: scale(0.5) rotate(0deg);
+    transform: scale(0.8) rotate(0deg) translateZ(0);
   }
   100% {
     opacity: 1;
-    transform: scale(1) rotate(0deg);
+    transform: scale(1) rotate(0deg) translateZ(0);
   }
 }
 
 .marine-particle {
-  animation: particleSpawn 0.5s ease-out;
-}
-
-/* Funnel rotation animation */
-/*
-   Keyframes for rotating funnel containers in 3D space.
-*/
-@keyframes containerRotate {
-  0% { transform: rotateY(0deg) rotateX(10deg); }
-  100% { transform: rotateY(360deg) rotateX(10deg); }
+  animation: particleSpawn 0.3s ease-out; /* Faster spawn animation */
 }
 
 /* Footer styling */
@@ -485,7 +467,7 @@ body.parallax-container {
 */
 .nui.bg-muted-glass, .bg-muted-glass {
   background: rgba(42, 42, 42, 0.6) !important;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px); /* Reduced blur */
   border-top: 1px solid var(--glass-border);
 }
 
@@ -579,6 +561,28 @@ body.parallax-container {
   
   .card-glass {
     border-width: 2px !important;
+  }
+}
+
+/* Performance optimizations for low-end devices */
+@media (max-width: 768px) {
+  /* Reduce effects on mobile devices */
+  .card-glass {
+    backdrop-filter: blur(8px); /* Further reduced blur on mobile */
+  }
+  
+  .bg-primary-glass {
+    backdrop-filter: blur(8px);
+  }
+  
+  .badge {
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Simplify animations on mobile */
+  .circle {
+    animation-duration: 16s; /* Slower animation */
+    opacity: 0.3;
   }
 }
 
