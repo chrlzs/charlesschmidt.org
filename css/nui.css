@@ -1,5 +1,9 @@
 /* NUI - Native UI Framework - Official Implementation */
 /* Based on https://github.com/chrlzs/NUI-Native-UI */
+/*
+   This file provides the core styles and variables for the NUI framework.
+   It includes global variables, layout utilities, typography, components, and responsive design.
+*/
 
 /* Global Variables */
 :root {
@@ -32,6 +36,10 @@
     --button-secondary-bg: var(--secondary-color);
     --button-secondary-color: var(--white);
 }
+/*
+   Root variables for NUI colors, fonts, and component styles.
+   Used throughout the framework for consistent theming.
+*/
 
 /* Reset and Base Styles */
 * {
@@ -39,17 +47,22 @@
     padding: 0;
     box-sizing: border-box;
 }
+/*
+   Resets default browser styles and sets base box-sizing.
+*/
 
 html {
     font-size: 16px;
     line-height: 1.6;
 }
+    /* Base font size */
 
 body {
     font-family: var(--font-family);
     color: var(--dark-color);
     background: var(--light-color);
 }
+    /* Set body font */
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
@@ -57,21 +70,27 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
     margin-bottom: 0.5rem;
 }
+/*
+   Heading styles for all heading levels.
+*/
 
 h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; }
 h3 { font-size: 1.5rem; }
 h4 { font-size: 1.25rem; }
+/* Font sizes for headings */
 
 p {
     margin-bottom: 1rem;
 }
+/* Paragraph spacing */
 
 a {
     color: var(--primary-color);
     text-decoration: none;
     transition: color var(--transition-speed);
 }
+/* Link styles and hover effect */
 
 a:hover {
     color: var(--secondary-color);
@@ -83,6 +102,9 @@ a:hover {
     margin: 0 auto;
     padding: 0 1rem;
 }
+/*
+   Container and max-width utilities for layout.
+*/
 
 .max-w-4xl {
     max-width: 56rem;
@@ -97,6 +119,7 @@ a:hover {
 .flex {
     display: flex;
 }
+/* Flexbox utilities */
 
 .flex-wrap {
     flex-wrap: wrap;
@@ -116,6 +139,7 @@ a:hover {
 .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
 .px-4 { padding-left: 1rem; padding-right: 1rem; }
 .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+/* Spacing utilities for padding and margin */
 
 .mb-2 { margin-bottom: 0.5rem; }
 .mb-4 { margin-bottom: 1rem; }
@@ -135,6 +159,7 @@ a:hover {
 .text-xl { font-size: 1.25rem; }
 .text-2xl { font-size: 1.5rem; }
 .text-4xl { font-size: 2.25rem; }
+/* Text alignment, size, and weight utilities */
 
 .font-bold { font-weight: 700; }
 .font-semibold { font-weight: 600; }
@@ -150,6 +175,7 @@ a:hover {
 .bg-surface { background-color: var(--light-color); }
 .bg-primary { background-color: var(--primary-color); }
 .bg-muted { background-color: var(--lighter-color); }
+/* Background color utilities */
 
 /* NUI Card Component */
 .nui-card, .card {
@@ -160,6 +186,10 @@ a:hover {
     background-color: var(--card-bg);
     transition: all var(--transition-speed) var(--transition-timing-function);
 }
+/*
+   Card styles for NUI cards and .card elements.
+   Includes header, body, and footer styles.
+*/
 
 .nui-card:hover, .card:hover {
     transform: translateY(-2px);
@@ -199,6 +229,10 @@ a:hover {
     text-decoration: none;
     font-size: var(--font-size);
 }
+/*
+   Button styles for NUI buttons and .button elements.
+   Includes outline and hover effects.
+*/
 
 .button:hover {
     background-color: var(--button-secondary-bg);
@@ -229,6 +263,10 @@ a:hover {
     border: 1px solid var(--card-border);
     transition: all var(--transition-speed);
 }
+/*
+   Badge styles for NUI badges and .badge elements.
+   Includes outline and hover effects.
+*/
 
 .badge:hover {
     background: var(--light-color);
@@ -249,6 +287,9 @@ a:hover {
 .list-disc {
     list-style-type: disc;
 }
+/*
+   List style utilities for disc and inside positioning.
+*/
 
 .list-inside {
     list-style-position: inside;
@@ -258,6 +299,9 @@ a:hover {
 .border {
     border: 1px solid var(--card-border);
 }
+/*
+   Border utilities for general and left border styles.
+*/
 
 .border-l-4 {
     border-left: 4px solid;
@@ -267,6 +311,9 @@ a:hover {
 .grid {
     display: grid;
 }
+/*
+   Grid layout utilities for columns and gaps.
+*/
 
 .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -290,6 +337,10 @@ a:hover {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
+/*
+   Responsive utilities for grid, container, and font sizes.
+   Adjusts layout for medium and small screens.
+*/
 
 @media (max-width: 768px) {
     .container {

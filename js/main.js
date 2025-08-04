@@ -1,293 +1,66 @@
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function () {
-
-    // Badge hover effects
-    document.querySelectorAll('.badge').forEach(badge => {
-        badge.addEventListener('mouseenter', () => {
-            badge.style.background = 'var(--accent-green-light)';
-            badge.style.borderColor = 'var(--accent-green)';
-            badge.style.boxShadow = '0 4px 16px rgba(159, 220, 0, 0.3)';
-        });
-
-        badge.addEventListener('mouseleave', () => {
-            badge.style.background = 'rgba(42, 42, 42, 0.8)';
-            badge.style.borderColor = 'var(--glass-border)';
-            badge.style.boxShadow = 'none';
-        });
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Add loading animation for cards
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe all cards for animation
-    document.querySelectorAll('.card-glass').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transition = 'opacity 0.6s ease';
-        observer.observe(card);
-    });
-
-    // Add parallax effect to background circles and funnel layers
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const parallax = scrolled * 0.5;
-
-        // Parallax for background circles
-        document.querySelectorAll('.circle').forEach((circle, index) => {
-            const speed = 0.2 + (index * 0.1);
-            circle.style.transform = `translateY(${parallax * speed}px)`;
-        });
-
-        // Parallax for funnel layers - different speeds based on depth
-        const funnelLayers = document.querySelectorAll('.funnel-layer');
-        funnelLayers.forEach((layer, index) => {
-            // Farther layers move slower (more depth illusion)
-            const depthSpeed = 0.1 + (index * 0.05);
-            const parallaxOffset = scrolled * depthSpeed;
-
-            // Add subtle horizontal movement for more dynamic effect
-            const horizontalOffset = Math.sin(scrolled * 0.001 + index) * 10;
-
-            layer.style.transform = `translateY(${parallaxOffset}px) translateX(${horizontalOffset}px)`;
-        });
-    });
-
-    // Initialize Funnel Animation
-    initializeFunnels();
-
-});
-
-// Funnel Animation Class
-class FunnelAnimation {
-    constructor(containerId, options = {}) {
-        this.container = document.getElementById(containerId);
-        this.text = options.text || "NUI ";
-        this.maxRadius = options.maxRadius || 200;
-        this.minRadius = options.minRadius || 15;
-        this.totalHeight = options.totalHeight || 300;
-        this.spiralTurns = options.spiralTurns || 3;
-        this.rotationSpeed = options.rotationSpeed || 20; // seconds
-        this.fontSize = options.fontSize || 16;
-        this.opacity = options.opacity || 1;
-        this.centerX = options.centerX || window.innerWidth / 2;
-        this.centerY = options.centerY || window.innerHeight / 2;
-
-        this.init();
+// Main Application Controller
+// Orchestrates initialization and cleanup of all major UI modules.
+class App {
+    /**
+     * Constructs the App controller.
+     * funnelManager: Manages funnel animations.
+     * uiInteractions: Manages UI interactions.
+     * isInitialized: Tracks initialization state.
+     */
+    constructor() {
+        this.funnelManager = null;
+        this.uiInteractions = null;
+        this.isInitialized = false;
     }
 
+    /**
+     * Initializes all modules if not already initialized.
+     */
     init() {
-        this.createSpiralText();
-        this.startRotation();
+        if (this.isInitialized) return;
+
+        // Initialize UI interactions first
+        this.uiInteractions = new UIInteractions();
+        this.uiInteractions.init();
+
+        // Initialize funnel animations (respects reduced motion preference)
+        this.funnelManager = new FunnelManager();
+        this.funnelManager.init();
+
+        this.isInitialized = true;
     }
 
-    createSpiralText() {
-        const totalChars = this.text.length * 6; // Repeat text multiple times
-
-        for (let i = 0; i < totalChars; i++) {
-            const charIndex = i % this.text.length;
-            const character = this.text[charIndex];
-
-            if (character === ' ') continue;
-
-            const char = document.createElement('div');
-            char.className = 'text-char';
-            char.textContent = character;
-
-            // Calculate spiral position
-            const progress = i / totalChars;
-
-            // Y position - moves from top to bottom
-            const y = this.centerY - (this.totalHeight / 2) + (progress * this.totalHeight);
-
-            // Radius - decreases as we go down
-            const radius = this.maxRadius - (progress * (this.maxRadius - this.minRadius));
-
-            // Angle - increases to create spiral
-            const angle = progress * this.spiralTurns * 360;
-            const radians = (angle * Math.PI) / 180;
-
-            // X and Z positions around the circle
-            const x = this.centerX + Math.cos(radians) * radius;
-            const z = Math.sin(radians) * radius;
-
-            // Determine if character is on back side
-            const isBack = Math.sin(radians) < 0;
-
-            // Position the character
-            char.style.left = x + 'px';
-            char.style.top = y + 'px';
-            char.style.transform = `translateZ(${z}px) rotateY(${angle}deg)`;
-
-            // Handle back-side appearance
-            if (isBack) {
-                char.classList.add('back');
-                char.style.transform += ' scaleX(-1)';
-            }
-
-            // Size variation
-            const sizeMultiplier = 0.6 + (radius / this.maxRadius) * 0.8;
-            char.style.fontSize = (this.fontSize * sizeMultiplier) + 'px';
-
-            // Opacity fade from top to bottom
-            const fadeOpacity = (1 - progress) * this.opacity;
-            const depthOpacity = 0.8 + (radius / this.maxRadius) * 0.2;
-            const finalOpacity = fadeOpacity * depthOpacity;
-
-            char.style.opacity = isBack ? finalOpacity * 0.4 : finalOpacity;
-
-            this.container.appendChild(char);
+    /**
+     * Cleans up all modules and resets state.
+     */
+    destroy() {
+        if (this.funnelManager) {
+            this.funnelManager.destroy();
         }
-    }
-
-    startRotation() {
-        this.container.style.animation = `containerRotate ${this.rotationSpeed}s linear infinite`;
+        if (this.uiInteractions) {
+            this.uiInteractions.destroy();
+        }
+        this.isInitialized = false;
     }
 }
 
-// Create multiple funnel animations with different properties
-function initializeFunnels() {
-    // Far background - very large, very faint
-    new FunnelAnimation('funnel1', {
-        text: "FULL-STACK ",
-        maxRadius: 400,
-        minRadius: 25,
-        totalHeight: 500,
-        spiralTurns: 5,
-        rotationSpeed: 45,
-        fontSize: 20,
-        opacity: 0.08,
-        centerX: window.innerWidth * 0.15,
-        centerY: window.innerHeight * 0.7
-    });
+// Initialize application when DOM is ready
+/**
+ * Initializes the application when the DOM is ready.
+ * Ensures required modules are loaded and sets up cleanup on unload.
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    // Check if required classes are available
+    if (typeof FunnelManager === 'undefined' || typeof UIInteractions === 'undefined') {
+        console.warn('Required modules not loaded. Some features may not work.');
+        return;
+    }
 
-    // Large background funnel
-    new FunnelAnimation('funnel2', {
-        text: "CODE ",
-        maxRadius: 280,
-        minRadius: 18,
-        totalHeight: 380,
-        spiralTurns: 4,
-        rotationSpeed: 30,
-        fontSize: 16,
-        opacity: 0.12,
-        centerX: window.innerWidth * 0.8,
-        centerY: window.innerHeight * 0.3
-    });
+    const app = new App();
+    app.init();
 
-    // Medium-large funnel
-    new FunnelAnimation('funnel3', {
-        text: "TECH ",
-        maxRadius: 200,
-        minRadius: 12,
-        totalHeight: 280,
-        spiralTurns: 3.5,
-        rotationSpeed: 25,
-        fontSize: 14,
-        opacity: 0.15,
-        centerX: window.innerWidth * 0.3,
-        centerY: window.innerHeight * 0.5
+    // Clean up on page unload
+    window.addEventListener('beforeunload', () => {
+        app.destroy();
     });
-
-    // Medium funnel
-    new FunnelAnimation('funnel4', {
-        text: "DEV ",
-        maxRadius: 160,
-        minRadius: 10,
-        totalHeight: 220,
-        spiralTurns: 3,
-        rotationSpeed: 22,
-        fontSize: 12,
-        opacity: 0.18,
-        centerX: window.innerWidth * 0.7,
-        centerY: window.innerHeight * 0.8
-    });
-
-    // Medium-small funnel
-    new FunnelAnimation('funnel5', {
-        text: "WEB ",
-        maxRadius: 120,
-        minRadius: 8,
-        totalHeight: 180,
-        spiralTurns: 2.8,
-        rotationSpeed: 20,
-        fontSize: 11,
-        opacity: 0.22,
-        centerX: window.innerWidth * 0.1,
-        centerY: window.innerHeight * 0.4
-    });
-
-    // Small funnel
-    new FunnelAnimation('funnel6', {
-        text: "NUI ",
-        maxRadius: 100,
-        minRadius: 6,
-        totalHeight: 150,
-        spiralTurns: 2.5,
-        rotationSpeed: 18,
-        fontSize: 10,
-        opacity: 0.25,
-        centerX: window.innerWidth * 0.9,
-        centerY: window.innerHeight * 0.6
-    });
-
-    // Foreground - smallest, most visible
-    new FunnelAnimation('funnel7', {
-        text: "JS ",
-        maxRadius: 80,
-        minRadius: 4,
-        totalHeight: 120,
-        spiralTurns: 2,
-        rotationSpeed: 15,
-        fontSize: 8,
-        opacity: 0.3,
-        centerX: window.innerWidth * 0.5,
-        centerY: window.innerHeight * 0.2
-    });
-
-    // Ultra-foreground - tiny, very sharp and visible
-    new FunnelAnimation('funnel8', {
-        text: "UI ",
-        maxRadius: 60,
-        minRadius: 2,
-        totalHeight: 100,
-        spiralTurns: 1.5,
-        rotationSpeed: 12,
-        fontSize: 6,
-        opacity: 0.35,
-        centerX: window.innerWidth * 0.2,
-        centerY: window.innerHeight * 0.9
-    });
-}
-
-// Reinitialize on resize
-window.addEventListener('resize', () => {
-    document.querySelectorAll('.funnel-layer').forEach(layer => {
-        layer.innerHTML = '';
-    });
-    setTimeout(initializeFunnels, 100);
 });

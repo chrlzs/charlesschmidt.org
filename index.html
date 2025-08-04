@@ -3,9 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Charles Schmidt - Resume</title>
+  <title>Charles Schmidt - Full-Stack Technology Leader | Resume</title>
+  <meta name="description" content="Charles Schmidt is a full-stack technology leader with 25+ years of experience in fintech, healthcare, consumer goods, agriculture, and more. Expert in React, Vue, Angular, C#, JavaScript, and cloud technologies." />
+  <meta name="keywords" content="Charles Schmidt, Full-Stack Developer, Technology Leader, React, Vue, Angular, C#, JavaScript, TypeScript, Azure, AWS, Mobile Development" />
+  <meta name="author" content="Charles Schmidt" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://charlesschmidt.org/" />
+  <meta property="og:title" content="Charles Schmidt - Full-Stack Technology Leader" />
+  <meta property="og:description" content="Full-stack technology leader with 25+ years of experience across multiple industries." />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://charlesschmidt.org/" />
+  <meta property="twitter:title" content="Charles Schmidt - Full-Stack Technology Leader" />
+  <meta property="twitter:description" content="Full-stack technology leader with 25+ years of experience across multiple industries." />
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Charles Schmidt",
+    "jobTitle": "Full-Stack Technology Leader",
+    "description": "Full-stack technology leader with 25+ years of experience in fintech, healthcare, consumer goods, agriculture, and more.",
+    "email": "charles.schmidt@gmail.com",
+    "url": "https://charlesschmidt.org",
+    "sameAs": [
+      "https://www.linkedin.com/in/charlie-schmidt",
+      "https://github.com/chrlzs",
+      "https://www.credly.com/users/charles-schmidt.416b7c58/badges"
+    ],
+    "knowsAbout": [
+      "React", "Vue", "Angular", "JavaScript", "TypeScript", "C#", "Java", "Kotlin", "PHP",
+      "Azure", "AWS", "Mobile Development", "Full-Stack Development", "Technology Leadership"
+    ]
+  }
+  </script>
+  
   <link rel="stylesheet" href="css/nui.css" />
   <link rel="stylesheet" href="css/custom.css" />
+  <link rel="preload" href="js/animations.js" as="script" />
+  <link rel="preload" href="js/ui-interactions.js" as="script" />
 </head>
 <body class="bg-surface text-primary font-sans parallax-container">
   <!-- Background Elements -->
@@ -26,38 +67,42 @@
   <div class="funnel-layer" id="funnel8"></div>
 
   <div class="content-wrapper">
-    <header class="bg-primary-glass text-primary-contrast py-8">
+    <header class="bg-primary-glass text-primary-contrast py-8" role="banner">
       <div class="container text-center">
         <h1 class="text-4xl font-bold mb-2">Charles Schmidt - Full-Stack Technology Leader</h1>
         <p class="text-lg mb-4">Full-stack technology leader with 25+ years of experience in fintech, healthcare, consumer goods, agriculture, and more.</p>
-        <div class="flex justify-center gap-4 text-sm">
-          <a href="mailto:charles.schmidt@gmail.com" class="text-link">📧 charles.schmidt@gmail.com</a>
-          <a href="https://www.linkedin.com/in/charlie-schmidt" target="_blank" class="text-link">LinkedIn</a>
-          <a href="https://github.com/chrlzs" target="_blank" class="text-link">GitHub</a>
-          <a href="https://docs.google.com/document/d/1rKGD8OjNyUQPIHfN6SbJGE6unyeJfRdhSHA4nb2gmsQ/edit?usp=sharing" target="_blank" class="text-link">Resume</a>
-          <a href="https://www.credly.com/users/charles-schmidt.416b7c58/badges" target="_blank" class="text-link">Credly</a>
-        </div>
+        <nav class="flex justify-center gap-4 text-sm" role="navigation" aria-label="Contact and social links">
+          <a href="mailto:charles.schmidt@gmail.com" class="text-link" aria-label="Email Charles Schmidt">📧 charles.schmidt@gmail.com</a>
+          <a href="https://www.linkedin.com/in/charlie-schmidt" target="_blank" rel="noopener noreferrer" class="text-link" aria-label="LinkedIn profile">LinkedIn</a>
+          <a href="https://github.com/chrlzs" target="_blank" rel="noopener noreferrer" class="text-link" aria-label="GitHub profile">GitHub</a>
+          <a href="https://docs.google.com/document/d/1rKGD8OjNyUQPIHfN6SbJGE6unyeJfRdhSHA4nb2gmsQ/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-link" aria-label="Download resume">Resume</a>
+          <a href="https://www.credly.com/users/charles-schmidt.416b7c58/badges" target="_blank" rel="noopener noreferrer" class="text-link" aria-label="Credly badges">Credly</a>
+        </nav>
       </div>
     </header>
 
-    <main class="container max-w-4xl mx-auto py-8 px-4">
+    <main class="container max-w-4xl mx-auto py-8 px-4" role="main">
       
-      <section class="card-glass mb-8">
+      <section class="card-glass mb-8" aria-labelledby="about-heading">
         <div class="card-header">
-          <h2 class="text-2xl font-semibold">About</h2>
+          <h2 id="about-heading" class="text-2xl font-semibold">About</h2>
         </div>
         <div class="card-body">
           <p class="text-muted">
-            Charlie Schmidt is a full-stack technology leader and professional with over 25 years of experience working with clients across fintech, health care, consumer goods, agriculture, food service, and more.<br><br>
-            Whether it's scrum planning, estimating project life cycles, architecture and technical design, website development, ecommerce, iOS/Android development, code reviews, or mentoring tech staff, Charlie's deep experience allows him to seamlessly integrate with and provide measurable value to tech teams and companies.<br><br>
+            Charlie Schmidt is a full-stack technology leader and professional with over 25 years of experience working with clients across fintech, health care, consumer goods, agriculture, food service, and more.
+          </p>
+          <p class="text-muted">
+            Whether it's scrum planning, estimating project life cycles, architecture and technical design, website development, ecommerce, iOS/Android development, code reviews, or mentoring tech staff, Charlie's deep experience allows him to seamlessly integrate with and provide measurable value to tech teams and companies.
+          </p>
+          <p class="text-muted">
             Charlie is an avid believer in ongoing education, currently pursuing a cybersecurity degree. Outside work, he enjoys home automation, German lessons, and time with family.
           </p>
         </div>
       </section>
 
-      <section class="card-glass mb-8">
+      <section class="card-glass mb-8" aria-labelledby="work-history-heading">
         <div class="card-header">
-          <h2 class="text-2xl font-semibold">Work History</h2>
+          <h2 id="work-history-heading" class="text-2xl font-semibold">Work History</h2>
         </div>
         <div class="card-body space-y-6">
           <div class="border-l-4 border-accent pl-4">
@@ -150,9 +195,9 @@
         </div>
       </section>
 
-      <section class="card-glass mb-8">
+      <section class="card-glass mb-8" aria-labelledby="skills-heading">
         <div class="card-header">
-          <h2 class="text-2xl font-semibold">Skills & Technologies</h2>
+          <h2 id="skills-heading" class="text-2xl font-semibold">Skills & Technologies</h2>
         </div>
         <div class="card-body">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -207,6 +252,8 @@
     </footer>
   </div>
 
+  <script src="js/animations.js"></script>
+  <script src="js/ui-interactions.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

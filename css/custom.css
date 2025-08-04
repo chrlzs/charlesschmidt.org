@@ -1,49 +1,90 @@
 /* NUI Framework Dark Theme Override */
+/*
+   Root variables for dark theme colors and custom accents.
+   These variables are used throughout the UI for consistent theming.
+*/
 :root {
   /* Override NUI default colors for dark theme */
-  --primary-color: #9fdc00;
-  --secondary-color: #7cb800;
-  --dark-color: #e0e0e0;
-  --light-color: #0a0a0a;
-  --lighter-color: #1a1a1a;
-  --white: #ffffff;
-  --card-bg: rgba(26, 26, 26, 0.8);
-  --card-border: rgba(255, 255, 255, 0.1);
-  --card-footer-text: #a0a0a0;
+  --primary-color: #9fdc00; /* Main accent color */
+  --secondary-color: #7cb800; /* Secondary accent color */
+  --dark-color: #e0e0e0; /* Text color for dark backgrounds */
+  --light-color: #0a0a0a; /* Main background color */
+  --lighter-color: #1a1a1a; /* Slightly lighter background */
+  --white: #ffffff; /* Pure white */
+  --card-bg: rgba(26, 26, 26, 0.2); /* Card background with glass effect */
+  --card-border: rgba(255, 255, 255, 0.1); /* Card border color */
+  --card-footer-text: #a0a0a0; /* Footer text color */
   
-  /* Custom theme variables */
-  --accent-green: #9fdc00;
-  --accent-green-dark: #7cb800;
-  --accent-green-light: rgba(159, 220, 0, 0.1);
-  --glass-bg: rgba(26, 26, 26, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --shadow-light: rgba(159, 220, 0, 0.2);
-  --shadow-dark: rgba(0, 0, 0, 0.5);
+  /* Custom theme variables for accents and glass effects */
+  --accent-green: #9fdc00; /* Bright green accent */
+  --accent-green-dark: #7cb800; /* Darker green accent */
+  --accent-green-light: rgba(159, 220, 0, 0.1); /* Light green accent for hover/focus */
+  --glass-bg: rgba(26, 26, 26, 0.1); /* Glass background for cards */
+  --glass-border: rgba(255, 255, 255, 0.1); /* Glass border for cards */
+  --shadow-light: rgba(159, 220, 0, 0.2); /* Light shadow for hover/focus */
+  --shadow-dark: rgba(0, 0, 0, 0.5); /* Dark shadow for depth */
 }
 
-/* Enhanced Background */
+/* Enhanced Background with performance optimization */
+/*
+   Applies a dark, glassy gradient background to the main container.
+   Uses will-change for smoother parallax performance.
+*/
 body.parallax-container {
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1f0f 100%);
   position: relative;
   overflow-x: hidden;
   min-height: 100vh;
+  will-change: scroll-position;
 }
 
-/* Background Floating Elements */
+/* Respect user's motion preferences */
+/*
+   Disables animations and transitions for users who prefer reduced motion.
+   Improves accessibility and performance for sensitive users.
+*/
+@media (prefers-reduced-motion: reduce) {
+  .funnel-layer,
+  .circle,
+  .text-char {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .card-glass {
+    transition: none !important;
+  }
+  
+  .badge {
+    transition: none !important;
+  }
+}
+
+/* Optimized Background Floating Elements */
+/*
+   Styles for floating background circles used in parallax and glass effects.
+   Uses contain for performance optimization.
+*/
 .bg-circles {
   position: fixed;
   width: 100%;
   height: 100%;
   pointer-events: none;
   z-index: -1;
+  contain: layout style paint;
 }
 
+/*
+   Individual floating circle for parallax background.
+   Uses radial gradient and float animation for depth effect.
+*/
 .circle {
   position: absolute;
   border-radius: 50%;
   background: radial-gradient(circle, var(--accent-green-light) 0%, transparent 70%);
   animation: float 8s ease-in-out infinite;
   opacity: 0.6;
+  will-change: transform;
 }
 
 .circle:nth-child(1) {
@@ -70,12 +111,20 @@ body.parallax-container {
   animation-delay: 4s;
 }
 
+/*
+   Keyframes for floating circle animation.
+   Creates a gentle up-and-down floating effect.
+*/
 @keyframes float {
   0%, 100% { transform: translateY(0px) scale(1); }
   50% { transform: translateY(-20px) scale(1.05); }
 }
 
-/* Enhanced Glass Effects for NUI Cards */
+/* Enhanced Glass Effects for NUI Cards with performance optimization */
+/*
+   Glassmorphism card style for NUI cards and .card-glass elements.
+   Uses backdrop-filter and box-shadow for depth and blur.
+*/
 .nui.card-glass, .card-glass {
   background: var(--glass-bg) !important;
   backdrop-filter: blur(20px);
@@ -85,16 +134,26 @@ body.parallax-container {
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 16px;
+  padding: 2rem;
+  will-change: transform, box-shadow;
+  contain: layout style;
 }
 
+/*
+   Hover effect for glass cards, increases shadow and lifts card slightly.
+*/
 .nui.card-glass:hover, .card-glass:hover {
   box-shadow: 
     0 20px 60px var(--shadow-dark),
     0 0 30px var(--shadow-light);
   border-color: rgba(159, 220, 0, 0.3) !important;
+  transform: translateY(-2px);
 }
 
 /* Enhanced Header */
+/*
+   Glassy header style for primary navigation and page headers.
+*/
 .nui.bg-primary-glass, .bg-primary-glass {
   background: rgba(10, 10, 10, 0.9) !important;
   backdrop-filter: blur(20px);
@@ -102,6 +161,9 @@ body.parallax-container {
   position: relative;
 }
 
+/*
+   Decorative gradient overlay for glassy headers.
+*/
 .nui.bg-primary-glass::before, .bg-primary-glass::before {
   content: '';
   position: absolute;
@@ -113,32 +175,51 @@ body.parallax-container {
   pointer-events: none;
 }
 
+/*
+   Ensures header content is above the gradient overlay.
+*/
 .nui.bg-primary-glass > *, .bg-primary-glass > * {
   position: relative;
   z-index: 1;
 }
 
 /* Accent Color Updates */
+/*
+   Utility class for accent border color.
+*/
 .border-accent {
   border-color: var(--accent-green);
 }
 
-/* Enhanced Badges */
+/* Enhanced Badges with performance optimization */
+/*
+   Glassy badge style for NUI badges and .badge elements.
+   Uses blur and transitions for interactive feedback.
+*/
 .nui.badge, .badge {
   background: rgba(42, 42, 42, 0.8) !important;
   border: 1px solid var(--glass-border) !important;
   backdrop-filter: blur(10px);
   transition: all 0.2s ease;
   color: var(--dark-color) !important;
+  will-change: transform, background-color, border-color, box-shadow;
 }
 
+/*
+   Hover effect for glassy badges, changes color and adds shadow.
+*/
 .nui.badge:hover, .badge:hover {
   background: var(--accent-green-light) !important;
   border-color: var(--accent-green) !important;
   box-shadow: 0 4px 12px rgba(159, 220, 0, 0.2);
+  transform: translateY(-1px);
 }
 
 /* Scrollbar Styling */
+/*
+   Custom scrollbar styles for webkit browsers.
+   Uses accent colors for thumb and track.
+*/
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -157,6 +238,10 @@ body.parallax-container {
 }
 
 /* Custom styles for resume layout */
+/*
+   Grid and spacing utilities for resume and content layout.
+   Includes responsive grid and border styles for sections.
+*/
 .grid {
   display: grid;
 }
@@ -211,12 +296,19 @@ body.parallax-container {
 }
 
 /* Content wrapper for better layout */
+/*
+   Ensures main content is above background and glass effects.
+*/
 .content-wrapper {
   position: relative;
   z-index: 1000;
 }
 
-/* Funnel Animation Styles */
+/* Optimized Funnel Animation Styles */
+/*
+   Styles for funnel animation layers and spiral text characters.
+   Uses 3D transforms and perspective for depth.
+*/
 .funnel-layer {
   position: fixed;
   top: 0;
@@ -226,8 +318,14 @@ body.parallax-container {
   transform-style: preserve-3d;
   z-index: -1;
   perspective: 1200px;
+  will-change: transform;
+  contain: layout style paint;
 }
 
+/*
+   Spiral text character style for funnel animations.
+   Uses accent color, shadow, and blur for glowing effect.
+*/
 .text-char {
   position: absolute;
   color: var(--accent-green);
@@ -238,14 +336,21 @@ body.parallax-container {
   transition: opacity 0.3s ease, filter 0.3s ease;
   pointer-events: none;
   font-family: 'Courier New', monospace;
+  will-change: transform, opacity;
 }
 
+/*
+   Style for spiral text characters on the back side of the spiral.
+*/
 .text-char.back {
   color: rgba(159, 220, 0, 0.3);
   filter: blur(0.5px);
 }
 
 /* Depth-based styling for different funnel layers */
+/*
+   Each funnel layer has a unique blur and shadow for depth effect.
+*/
 #funnel1 .text-char {
   filter: blur(2px);
   text-shadow: 0 0 20px rgba(159, 220, 0, 0.3);
@@ -287,12 +392,18 @@ body.parallax-container {
 }
 
 /* Funnel rotation animation */
+/*
+   Keyframes for rotating funnel containers in 3D space.
+*/
 @keyframes containerRotate {
   0% { transform: rotateY(0deg) rotateX(10deg); }
   100% { transform: rotateY(360deg) rotateX(10deg); }
 }
 
 /* Footer styling */
+/*
+   Glassy muted background for footer sections.
+*/
 .nui.bg-muted-glass, .bg-muted-glass {
   background: rgba(42, 42, 42, 0.6) !important;
   backdrop-filter: blur(10px);
@@ -321,19 +432,87 @@ body.parallax-container {
   color: var(--black) !important;
 }
 
-/* Print styles for resume */
+/* Enhanced print styles for resume */
 @media print {
-  .nui.bg-primary {
-    background: #333 !important;
-    color: white !important;
+  /* Hide decorative elements */
+  .bg-circles,
+  .funnel-layer,
+  .text-char {
+    display: none !important;
   }
   
-  .nui.card {
-    break-inside: avoid;
-    margin-bottom: 1rem;
-  }
-  
+  /* Optimize for print */
   body {
     font-size: 12px;
+    background: white !important;
+    color: black !important;
+  }
+  
+  .nui.bg-primary, .bg-primary-glass {
+    background: #333 !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .nui.card, .card-glass {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+  }
+  
+  .badge {
+    background: #f0f0f0 !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+  }
+  
+  /* Ensure links are visible */
+  a {
+    color: #0066cc !important;
+    text-decoration: underline !important;
+  }
+  
+  /* Page breaks */
+  h2 {
+    page-break-after: avoid;
+  }
+  
+  .border-l-4 {
+    page-break-inside: avoid;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --accent-green: #00ff00;
+    --glass-border: rgba(255, 255, 255, 0.5);
+  }
+  
+  .text-char {
+    text-shadow: none;
+  }
+  
+  .card-glass {
+    border-width: 2px !important;
+  }
+}
+
+/* Dark mode support (system preference) */
+@media (prefers-color-scheme: light) {
+  /* Override for users who prefer light mode */
+  body.parallax-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f0f8f0 100%);
+  }
+  
+  :root {
+    --primary-color: #0066cc;
+    --dark-color: #333;
+    --light-color: #fff;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(0, 0, 0, 0.1);
   }
 }
