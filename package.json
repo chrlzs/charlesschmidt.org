@@ -1,0 +1,58 @@
+{
+    "name": "charlesschmidt-org",
+    "version": "1.0.0",
+    "description": "Charles Schmidt's professional resume website - Full-stack technology leader with 25+ years of experience",
+    "main": "index.html",
+    "scripts": {
+        "start": "python3 -m http.server 8000",
+        "serve": "python3 -m http.server 8000",
+        "dev": "python3 -m http.server 8000",
+        "build": "echo 'Static site - no build required'",
+        "lint:css": "stylelint 'css/**/*.css'",
+        "lint:js": "eslint 'js/**/*.js'",
+        "format": "prettier --write '**/*.{html,css,js,json,md}'",
+        "validate": "html-validate index.html",
+        "lighthouse": "lighthouse http://localhost:8000 --output html --output-path ./lighthouse-report.html",
+        "test": "echo 'No tests specified'"
+    },
+    "keywords": [
+        "resume",
+        "portfolio",
+        "full-stack",
+        "developer",
+        "technology-leader",
+        "charles-schmidt",
+        "web-development",
+        "javascript",
+        "css",
+        "html"
+    ],
+    "author": {
+        "name": "Charles Schmidt",
+        "email": "charles.schmidt@gmail.com",
+        "url": "https://charlesschmidt.org"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/chrlzs/charlesschmidt.org.git"
+    },
+    "homepage": "https://charlesschmidt.org",
+    "devDependencies": {
+        "eslint": "^8.0.0",
+        "html-validate": "^8.0.0",
+        "lighthouse": "^11.0.0",
+        "prettier": "^3.0.0",
+        "stylelint": "^15.0.0",
+        "stylelint-config-standard": "^34.0.0"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead",
+        "not ie 11"
+    ],
+    "engines": {
+        "node": ">=16.0.0"
+    }
+}
