@@ -195,7 +195,3 @@ While this is a personal resume website, suggestions for improvements are welcom
 1. Open an issue for bugs or suggestions
 2. Submit a pull request for improvements
 3. Share feedback on design or performance
-
----
-
-**Built with ❤️ using modern web technologies and the official [NUI-Native-UI](https://github.com/chrlzs/NUI-Native-UI) component library.**
