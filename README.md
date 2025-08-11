@@ -17,7 +17,6 @@ Charlie is an avid believer in ongoing education, currently pursuing a cybersecu
 - **LinkedIn**: [charlie-schmidt](https://www.linkedin.com/in/charlie-schmidt)
 - **GitHub**: [chrlzs](https://github.com/chrlzs)
 - **Resume**: [Download PDF](https://docs.google.com/document/d/1rKGD8OjNyUQPIHfN6SbJGE6unyeJfRdhSHA4nb2gmsQ/edit?usp=sharing)
-- **Certifications**: [Credly Badges](https://www.credly.com/users/charles-schmidt.416b7c58/badges)
 - **Contact**: [charles.schmidt@gmail.com](mailto:charles.schmidt@gmail.com)
 
 ## 🛠️ Skills & Technologies
