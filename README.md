@@ -1,8 +1,5 @@
 # Charles Schmidt - Full-Stack Technology Leader
 
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fcharlesschmidt.org)](https://charlesschmidt.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 ## About
 
 Charlie Schmidt is a full-stack technology leader and professional with over 25 years of experience working with clients across fintech, health care, consumer goods, agriculture, food service, and more.
