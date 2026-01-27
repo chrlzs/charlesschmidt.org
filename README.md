@@ -1,8 +1,5 @@
 # Charles Schmidt - Full-Stack Technology Leader
 
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fcharlesschmidt.org)](https://charlesschmidt.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 ## About
 
 Charlie Schmidt is a full-stack technology leader and professional with over 25 years of experience working with clients across fintech, health care, consumer goods, agriculture, food service, and more.
@@ -17,7 +14,6 @@ Charlie is an avid believer in ongoing education, currently pursuing a cybersecu
 - **LinkedIn**: [charlie-schmidt](https://www.linkedin.com/in/charlie-schmidt)
 - **GitHub**: [chrlzs](https://github.com/chrlzs)
 - **Resume**: [Download PDF](https://docs.google.com/document/d/1rKGD8OjNyUQPIHfN6SbJGE6unyeJfRdhSHA4nb2gmsQ/edit?usp=sharing)
-- **Certifications**: [Credly Badges](https://www.credly.com/users/charles-schmidt.416b7c58/badges)
 - **Contact**: [charles.schmidt@gmail.com](mailto:charles.schmidt@gmail.com)
 
 ## 🛠️ Skills & Technologies
@@ -195,7 +191,3 @@ While this is a personal resume website, suggestions for improvements are welcom
 1. Open an issue for bugs or suggestions
 2. Submit a pull request for improvements
 3. Share feedback on design or performance
-
----
-
-**Built with ❤️ using modern web technologies and the official [NUI-Native-UI](https://github.com/chrlzs/NUI-Native-UI) component library.**
