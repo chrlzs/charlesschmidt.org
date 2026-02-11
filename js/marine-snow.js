@@ -24,8 +24,7 @@ class MarineSnowParticle {
 
         // Performance optimizations
         this.needsUpdate = true;
-        this.lastUpdateTime = 0;
-        this.updateInterval = 16.67; // ~60fps, but we'll throttle based on visibility
+        this.blur = (1 - this.z) * 2;
 
         this.createElement();
     }
@@ -67,25 +66,16 @@ class MarineSnowParticle {
     }
 
     update(deltaTime, parallaxOffset = 0) {
-        const currentTime = performance.now();
-
-        // Throttle updates for better performance
-        if (currentTime - this.lastUpdateTime < this.updateInterval) {
-            return;
-        }
-
-        this.lastUpdateTime = currentTime;
-
-        // Apply gravity and drift
-        this.y += this.fallSpeed * deltaTime * 0.1;
-        this.x += this.driftSpeed * deltaTime * 0.1;
+        // Apply gravity and drift with smooth interpolation
+        this.y += this.fallSpeed * deltaTime * 0.016; // Normalized for 60fps baseline
+        this.x += this.driftSpeed * deltaTime * 0.016;
 
         // Apply parallax effect (closer particles move more with scroll)
         const parallaxInfluence = this.z * 0.3;
         this.y += parallaxOffset * parallaxInfluence;
 
         // Rotate particle
-        this.rotation += this.rotationSpeed * deltaTime * 0.01;
+        this.rotation = (this.rotation + this.rotationSpeed * deltaTime * 0.001) % 360;
 
         // Wrap around screen edges
         if (this.y > window.innerHeight + 50) {
@@ -129,7 +119,7 @@ class MarineSnowSystem {
         this.lastScrollY = 0;
 
         // Performance optimizations
-        this.targetFPS = 30; // Reduced from 60fps
+        this.targetFPS = 60; // Smooth 60fps animation
         this.frameInterval = 1000 / this.targetFPS;
         this.performanceMode = this.detectPerformanceMode();
         this.particlePool = []; // Object pooling for better memory management
@@ -294,13 +284,8 @@ class MarineSnowSystem {
             (this.scrollY - this.lastScrollY) * 0.1 : 0;
         this.lastScrollY = this.scrollY;
 
-        // Update particles in batches for better performance
-        const batchSize = Math.ceil(this.particles.length / 3);
-        const frameIndex = Math.floor(currentTime / this.frameInterval) % 3;
-        const startIndex = frameIndex * batchSize;
-        const endIndex = Math.min(startIndex + batchSize, this.particles.length);
-
-        for (let i = startIndex; i < endIndex; i++) {
+        // Update all particles for smooth continuous motion
+        for (let i = 0; i < this.particles.length; i++) {
             this.particles[i].update(deltaTime, parallaxOffset);
         }
 
