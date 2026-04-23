@@ -1,0 +1,39 @@
+# Balanced preset
+# Allow search and user-directed retrieval where documented.
+# Block training-oriented crawlers by default.
+
+User-agent: *
+Allow: /
+
+# OpenAI
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+# Anthropic
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Common admin/private areas
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /account/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /api/private/
