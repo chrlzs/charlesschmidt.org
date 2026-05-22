@@ -1,6 +1,7 @@
 // js/favicon.js
-// Neon cyberpunk “radar” favicon with glitch bursts.
-// Uses data: URLs and fully owns the favicon <link> to prevent fallback to favicon.ico.
+// Neon cyberpunk radar favicon.
+// Keep it static by default; frequent favicon URL changes can cause visible
+// repaint stutter in Chrome while the page is scrolling.
 
 (() => {
     // Remove any existing icon links so the browser can't "choose" a different one later
@@ -91,27 +92,50 @@
         </g>`
         );
 
-    let angle = 0;
-    setFavicon(baseSvg(angle));
+    setFavicon(baseSvg(45));
 
-    setInterval(() => {
-        angle = (angle + 18) % 360;
+    const shouldAnimate =
+        new URLSearchParams(window.location.search).has("animatedFavicon") &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!shouldAnimate) return;
+
+    let angle = 45;
+    let sweepTimer = null;
+    let glitchTimer = null;
+
+    const startAnimation = () => {
+        if (sweepTimer || glitchTimer) return;
+
+        sweepTimer = setInterval(() => {
+            angle = (angle + 24) % 360;
+            setFavicon(baseSvg(angle));
+        }, 300);
+
+        glitchTimer = setInterval(() => {
+            if (Math.random() > 0.88) {
+                const a = angle;
+                setFavicon(glitchSvg(a));
+                setTimeout(() => setFavicon(baseSvg((a + 14) % 360)), 120);
+            }
+        }, 2400);
+    };
+
+    const stopAnimation = () => {
+        clearInterval(sweepTimer);
+        clearInterval(glitchTimer);
+        sweepTimer = null;
+        glitchTimer = null;
         setFavicon(baseSvg(angle));
-    }, 120);
+    };
 
-    setInterval(() => {
-        if (Math.random() > 0.82) {
-            const a = angle;
-            setFavicon(glitchSvg(a));
-            setTimeout(() => setFavicon(baseSvg((a + 10) % 360)), 90);
-            setTimeout(() => setFavicon(baseSvg((a + 22) % 360)), 180);
-        }
-    }, 1400);
+    startAnimation();
 
     document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) {
-            setFavicon(glitchSvg(angle));
-            setTimeout(() => setFavicon(baseSvg(angle)), 120);
+        if (document.hidden) {
+            stopAnimation();
+        } else {
+            startAnimation();
         }
     });
 })();

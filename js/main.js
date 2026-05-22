@@ -31,9 +31,9 @@ class App {
 
         // Initialize marine snow particle effect
         this.marineSnow = new MarineSnowSystem({
-            particleCount: 40,
+            particleCount: 24,
             baseSpeed: 0.8,
-            enableParallax: true
+            enableParallax: false
         });
 
         this.isInitialized = true;

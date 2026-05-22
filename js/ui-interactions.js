@@ -1,14 +1,12 @@
 // UI Interactions Module
-// Handles interactive UI features such as badge hovers, smooth scrolling, card animations, and parallax effects.
+// Handles interactive UI features such as badge hovers, smooth scrolling, and card animations.
 class UIInteractions {
     /**
      * Initializes the UIInteractions instance.
      * observers: Stores IntersectionObservers for cleanup.
-     * throttleTimeout: Used for throttling scroll events.
      */
     constructor() {
         this.observers = new Map();
-        this.throttleTimeout = null;
     }
 
     /**
@@ -18,7 +16,6 @@ class UIInteractions {
         this.setupBadgeHovers();
         this.setupSmoothScrolling();
         this.setupCardAnimations();
-        this.setupParallaxEffects();
     }
 
     /**
@@ -121,55 +118,6 @@ class UIInteractions {
     }
 
     /**
-     * Sets up parallax effects for background circles and funnel layers.
-     * Uses throttled scroll event for performance.
-     */
-    setupParallaxEffects() {
-        // Use throttled scroll for better performance
-        window.addEventListener('scroll', this.throttledParallax.bind(this), { passive: true });
-    }
-
-    /**
-     * Throttles the parallax effect to animation frames for smoothness and efficiency.
-     */
-    throttledParallax() {
-        if (this.throttleTimeout) return;
-
-        this.throttleTimeout = requestAnimationFrame(() => {
-            this.handleParallax();
-            this.throttleTimeout = null;
-        });
-    }
-
-    /**
-     * Applies parallax transformations to circles and funnel layers based on scroll position.
-     * Circles move vertically at different speeds; funnel layers move both vertically and horizontally.
-     */
-    handleParallax() {
-        const scrolled = window.pageYOffset;
-        const parallax = scrolled * 0.5;
-
-        // Parallax for background circles
-        const circles = document.querySelectorAll('.circle');
-        circles.forEach((circle, index) => {
-            // Each circle moves at a slightly different speed for depth effect
-            const speed = 0.2 + (index * 0.1);
-            circle.style.transform = `translateY(${parallax * speed}px)`;
-        });
-
-        // Parallax for funnel layers
-        const funnelLayers = document.querySelectorAll('.funnel-layer');
-        funnelLayers.forEach((layer, index) => {
-            // Funnel layers move vertically and horizontally for dynamic effect
-            const depthSpeed = 0.1 + (index * 0.05);
-            const parallaxOffset = scrolled * depthSpeed;
-            const horizontalOffset = Math.sin(scrolled * 0.001 + index) * 10;
-
-            layer.style.transform = `translateY(${parallaxOffset}px) translateX(${horizontalOffset}px)`;
-        });
-    }
-
-    /**
      * Cleans up observers and cancels any pending animation frames.
      * Call this when removing UIInteractions to prevent memory leaks.
      */
@@ -178,10 +126,6 @@ class UIInteractions {
         this.observers.forEach(observer => observer.disconnect());
         this.observers.clear();
 
-        // Cancel any pending animation frames
-        if (this.throttleTimeout) {
-            cancelAnimationFrame(this.throttleTimeout);
-        }
     }
 }
 
