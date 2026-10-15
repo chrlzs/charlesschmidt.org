@@ -72,15 +72,20 @@ class UIInteractions {
      * @param {Event} e - The click event.
      */
     handleSmoothScroll(e) {
-        e.preventDefault();
         const targetId = e.currentTarget.getAttribute('href');
-        const target = document.querySelector(targetId);
+        if (!targetId || targetId === '#' || targetId.length <= 1) return;
 
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+        try {
+            const target = document.querySelector(targetId);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        } catch {
+            // Ignore invalid selector
         }
     }
 

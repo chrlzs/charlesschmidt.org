@@ -1,107 +1,49 @@
-# Charles Schmidt - Full-Stack Technology Leader
+# Charles Schmidt - Engineering Leader. Still an engineer.
 
 ## About
 
-Charlie Schmidt is a full-stack technology leader and professional with over 25 years of experience working with clients across fintech, health care, consumer goods, agriculture, food service, and more.
+Charles Schmidt is an engineering leader with over 25 years of experience building software, figuring out complicated systems, and leading the people who make them work.
 
-Whether it's scrum planning, estimating project life cycles, architecture and technical design, website development, ecommerce, iOS/Android development, code reviews, or mentoring tech staff, Charlie's deep experience allows him to seamlessly integrate with and provide measurable value to tech teams and companies.
-
-Charlie is an avid believer in ongoing education, currently pursuing a cybersecurity degree. Outside work, he enjoys home automation, German lessons, and time with family.
+These days, Charlie leads Data and Integrations engineering at EverTrue, while continuing to provide technical advisory services through Schmidt Digital Consulting. He remains deeply hands-on and curious about systems architecture, data infrastructure, and developer empowerment.
 
 ## 🔗 Links
 
 - **Website**: [charlesschmidt.org](https://charlesschmidt.org)
 - **LinkedIn**: [charlie-schmidt](https://www.linkedin.com/in/charlie-schmidt)
 - **GitHub**: [chrlzs](https://github.com/chrlzs)
-- **Resume**: [Download PDF](https://docs.google.com/document/d/1rKGD8OjNyUQPIHfN6SbJGE6unyeJfRdhSHA4nb2gmsQ/edit?usp=sharing)
+- **Resume**: [Download Resume](https://docs.google.com/document/d/1rKGD8OjNyUQPIHfN6SbJGE6unyeJfRdhSHA4nb2gmsQ/edit?usp=sharing)
 - **Contact**: [charles.schmidt@gmail.com](mailto:charles.schmidt@gmail.com)
 
-## 🛠️ Skills & Technologies
+## 💼 Experience
 
-### Front End
-- **Frameworks**: React, Vue, Angular, Aurelia
-- **Styling**: SASS, LESS, Bootstrap, Bulma, Tailwind CSS
-- **Modern Web**: PWA, Web Components, Responsive Design
+### EverTrue
+**Engineering Leadership, Data & Integrations | 2026–Present**
+Leading teams responsible for data infrastructure, synchronization, and integrations across multiple products. Working on platform reliability, integration modernization, engineering practices, and the infrastructure needed to support future data and intelligence capabilities.
 
-### Backend & Languages
-- **Languages**: C#, JavaScript, TypeScript, Java, Kotlin, PHP
-- **Patterns**: MVC, MVP, MVVM (.NET Core focus)
-- **Web Services**: GraphQL, RESTful APIs, SOAP, Blazor WASM
+### Schmidt Digital Consulting
+**Founder & Principal Consultant | 2024–Present**
+Providing software engineering, architecture, technical strategy, and development consulting for organizations building or improving digital products and platforms.
 
-### Mobile Development
-- **Platforms**: Android/iOS Native & Hybrid
-- **Technologies**: React Native, Xamarin, Cordova
+### GenAlpha Technologies
+**Software Engineering Manager | 2024–2025**
+Led engineering teams working on B2B software products, cloud services, and AI initiatives. Supported architecture, development practices, technical planning, and rapid prototyping.
 
-### Cloud & DevOps
-- **Azure**: Functions, App Services, VMs, Cognitive Services, CI/CD
-- **AWS**: EKS, S3, Lambda, EC2, CI/CD
-- **Databases**: MSSQL, MySQL/MariaDB, Redis, MongoDB, PostgreSQL
+### West Bend Mutual Insurance
+**Systems Architect | 2023–2024**
+Worked on enterprise architecture, engineering standards, and developer tooling. Evaluated AI-assisted development technologies and helped introduce new tools and practices across engineering teams.
 
-### Design & Analytics
-- **UX/UI/IA**: Lucid, Figma, Adobe XD
-- **Analytics**: Google Analytics, GTM, Power BI, Looker
+### Source Intelligence
+**Director of Design and Engineering | 2022–2023**
+Led front-end engineering and user experience teams developing enterprise compliance software, with a focus on delivery, team development, and product architecture.
 
-### Certifications
-- Kentico Kloud Certified
-- Ucommerce Certified
-- Google Mobile Developer
-- IBM Cybersecurity Analyst
+### Earlier Experience
+Before that, held engineering and leadership roles at Horizontal Digital, CI Design, Charleston|Orwig, Layer One Media / Red Arrow Labs, and several other organizations spanning enterprise application development, ecommerce, infrastructure, systems architecture, and technical consulting.
 
-## 💼 Work History
+## 🧪 Projects & Experiments
 
-### Director of Design and Engineering, Source Intelligence
-**March 2022 - January 2023**
-- Managed front-end and UX teams for next-gen compliance product
-- Led sprint planning, execution, and delivery
-- Mentored team members and defined career trajectories
-
-### Senior Technology Lead / Manager, Horizontal Digital
-**May 2021 - March 2022**
-- Tech lead for $1M+ e-commerce account
-- Led sprint planning and delivery of websites and integrations
-
-### Director of Development | Technology, CI Design
-**July 2016 - May 2021**
-- Grew development team from 3 to 11
-- Implemented peer code review and containerization
-- Hosted workshops on emerging technologies
-
-### Director of Digital, Charleston|Orwig
-**March 2014 - July 2016**
-- Managed developers across offices and Fortune 100 clients
-- Designed and oversaw project management practice
-- Achieved partnership status with Sitecore and Microsoft
-
-### Senior Developer and Technical Lead, Layer One Media | Red Arrow Labs
-**September 2012 - March 2014**
-- Lead for team of 30 developers and sales consultants
-- Provided technical expertise and guidance to cross-functional teams
-
-### Senior Developer, Charleston Orwig
-**May 2008 – September 2012**
-- Strategic technical leadership for cross-functional teams
-- Defined and implemented technologies and architecture for enterprise clients
-
-### Senior Software Engineer, SpectraCom
-**December 2006 – April 2008**
-- Lead developer on web and mobile builds for Fortune 100/500 companies
-- Implemented architecture and evaluated technologies for client projects
-
-### .Net Developer, Journal Broadcast Group
-**June 2006 – December 2006**
-- Designed and implemented technical solutions for Milwaukee Journal Sentinel websites
-
-### Software Engineer, Dart Chart Systems
-**2004 – 2006**
-- Overhauled legacy ASP system, created modern workflow with .Net technologies
-
-### Developer, Cream City Communications
-**2000 – 2004**
-- Designed and implemented web solutions for enterprise clients
-
-### General Operations Manager, Phoenix Internet / Mixcom
-**1997 – 2000**
-- Managed ISP operations and technical solutions
+- **Mermantic**: Lightweight Mermaid.js diagram editor ([mermantic.net](https://mermantic.net/))
+- **Blacksite // 1997**: Retro-inspired 90s action/exploration game project
+- **The Home Lab**: Self-hosted servers, network equipment, and home automation experiments
 
 ## 🚀 Website Features
 

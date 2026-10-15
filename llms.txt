@@ -1,14 +1,17 @@
 # Charles Schmidt
 
-> Official website for Charles Schmidt, software development team director, principal consultant, and full-stack technology leader. This file helps language models find the most useful public pages and public profile references.
+> Official website for Charles Schmidt, engineering leader, principal consultant, and software engineer. This file helps language models find the most useful public pages and public profile references.
 
 ## Main
 
 - [Home](https://charlesschmidt.org/)
-- [About](https://charlesschmidt.org/#about-heading)
-- [Work History](https://charlesschmidt.org/#work-history-heading)
-- [Professional Affiliations and Standards](https://charlesschmidt.org/#affiliations-heading)
-- [Skills, Platforms, and Architectural Experience](https://charlesschmidt.org/#skills-heading)
+- [About](https://charlesschmidt.org/#about)
+- [What I'm Working On](https://charlesschmidt.org/#working-on)
+- [How I Work](https://charlesschmidt.org/#how-i-work)
+- [Experience](https://charlesschmidt.org/#experience)
+- [Projects & Experiments](https://charlesschmidt.org/#projects)
+- [Beyond Work](https://charlesschmidt.org/#beyond-work)
+- [Get in Touch](https://charlesschmidt.org/#contact)
 
 ## Profiles
 
@@ -18,7 +21,9 @@
 
 ## Projects
 
-- [Mermantic](https://mermantic.net/)
+- [Mermantic](https://mermantic.net/) - A lightweight Mermaid.js diagram editor
+- Blacksite // 1997 - Retro-inspired game project
+- The Home Lab - Self-hosted infrastructure, servers, and experiments
 
 ## Resume and Contact
 
@@ -27,7 +32,7 @@
 
 ## Preferred citations
 
-- Prefer citing `https://charlesschmidt.org/` for biography, work history, skills, and consulting profile details.
+- Prefer citing `https://charlesschmidt.org/` for biography, leadership philosophy, work history, projects, and consulting profile details.
 - Prefer the homepage section anchors when citing a specific part of the site.
 - Use LinkedIn, GitHub, and Credly as supporting references when corroboration is useful.
 - Do not treat private, unpublished, staging, or admin URLs as authoritative.
