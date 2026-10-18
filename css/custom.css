@@ -583,3 +583,163 @@ body.parallax-container {
     --glass-border: rgba(0, 0, 0, 0.1);
   }
 }
+
+/* ==========================================================================
+   Accessibility & High-Contrast Typography
+   ========================================================================== */
+
+/* High-legibility body text override for dark theme */
+body.parallax-container {
+  color: var(--dark-color) !important;
+}
+
+.text-muted {
+  color: #c4ccd4 !important; /* Crisp high-contrast off-white/gray (11.8:1 ratio) */
+}
+
+.text-subtle {
+  color: #94a3b8 !important; /* Subtle secondary metadata tone */
+}
+
+.text-accent-subtle {
+  color: #a3e635;
+}
+
+.card-body p {
+  color: #d6d9dc;
+  line-height: 1.7;
+}
+
+.card-header h2 {
+  color: var(--accent-green);
+  letter-spacing: -0.01em;
+}
+
+/* Accessibility: Skip to Content */
+.skip-link {
+  position: absolute;
+  top: -120px;
+  left: 1.5rem;
+  background: var(--accent-green);
+  color: #000000 !important;
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  z-index: 10000;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(159, 220, 0, 0.4);
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+  top: 1rem;
+  outline: 3px solid #ffffff !important;
+}
+
+/* Accessibility: Visible Focus States */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent-green) !important;
+  outline-offset: 3px !important;
+  border-radius: 4px;
+  box-shadow: 0 0 12px rgba(159, 220, 0, 0.5) !important;
+}
+
+/* ==========================================================================
+   Ambient FX Toggle & Performance Controls
+   ========================================================================== */
+
+.fx-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(26, 32, 26, 0.8);
+  border: 1px solid var(--glass-border);
+  border-radius: 9999px;
+  color: var(--dark-color);
+  font-size: 0.75rem;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.fx-toggle-btn:hover {
+  background: var(--accent-green-light);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  box-shadow: 0 2px 10px rgba(159, 220, 0, 0.2);
+}
+
+.fx-toggle-btn .fx-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 6px var(--accent-green);
+  transition: all 0.2s ease;
+}
+
+.fx-toggle-btn.off .fx-dot {
+  background: #64748b;
+  box-shadow: none;
+}
+
+.fx-toggle-btn.off {
+  opacity: 0.8;
+  color: #94a3b8;
+}
+
+/* Body state when FX is turned off */
+body.fx-disabled .funnel-layer,
+body.fx-disabled .circle,
+body.fx-disabled .marine-snow-container {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Technical Competencies Collapsible Card
+   ========================================================================== */
+
+.tech-competencies-card {
+  background: rgba(26, 32, 26, 0.45);
+  border: 1px solid rgba(159, 220, 0, 0.2);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+  transition: border-color 0.2s ease;
+}
+
+.tech-competencies-card:hover {
+  border-color: rgba(159, 220, 0, 0.35);
+}
+
+.tech-competencies-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-green);
+  list-style: none;
+  user-select: none;
+}
+
+.tech-competencies-summary::-webkit-details-marker {
+  display: none;
+}
+
+.tech-competencies-summary .toggle-arrow {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+}
+
+details[open] .tech-competencies-summary .toggle-arrow {
+  transform: rotate(180deg);
+}
+

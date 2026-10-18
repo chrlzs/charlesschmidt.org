@@ -293,9 +293,10 @@ class FunnelManager {
     }
 
     createFunnels() {
-        // Use fewer funnels on low-performance devices
-        const configsToUse = this.performanceMode === 'low' ?
-            FUNNEL_CONFIGS.slice(0, 4) : FUNNEL_CONFIGS;
+        // Use fewer funnels on mobile screens or low-performance devices
+        const isMobile = window.innerWidth <= 768;
+        const configsToUse = (this.performanceMode === 'low' || isMobile) ?
+            FUNNEL_CONFIGS.slice(0, 2) : FUNNEL_CONFIGS;
 
         configsToUse.forEach(config => {
             const options = {
